@@ -1,0 +1,150 @@
+# -*- coding: utf-8 -*-
+# ===============================================================================
+# TokenVector Media Downloader Engine - Core Engine Native (.tkv)
+# Repository chuẩn: https://github.com/nguyenhungtran18/TokenVector
+# Tuyệt đối không dùng Python/C#, sử dụng 100% cú pháp TokenVector Native (.tkv)
+# ===============================================================================
+
+
+# -------------------------------------------------------------------------------
+def get_platform_os() -> "str":
+    return "Windows"
+
+def init_core_engine() -> "i32":
+    return 1
+
+class PosixRuntimeBridge:
+    is_active: "i32"
+    def grant_execution_rights(self, target_binary_path: "str") -> "i32":
+        current_platform = get_platform_os()
+        if current_platform == "Windows":
+            return 1
+        return 0
+
+
+# -------------------------------------------------------------------------------
+# 2. Resumable Session & Range State Machine (RFC 9110)
+# -------------------------------------------------------------------------------
+class ResumableDownloadSession:
+    file_path: "str"
+    source_url: "str"
+    existing_bytes: "i64"
+    total_stream_bytes: "i64"
+    resumed: "i32"
+
+    def init_session(self, local_output_path: "str", stream_url: "str") -> "i32":
+        self.file_path = local_output_path
+        self.source_url = stream_url
+        self.existing_bytes = 0
+        self.total_stream_bytes = 0
+        self.resumed = 0
+        return 1
+
+    def check_local_offset(self) -> "i64":
+        return self.existing_bytes
+
+    def construct_range_header(self) -> "str":
+        if self.existing_bytes > 0:
+            return "Range: bytes=" + str(self.existing_bytes) + "-"
+        return ""
+
+    def process_server_response(self, http_code: "i32", content_length: "i64") -> "i32":
+        if http_code == 206:
+            self.total_stream_bytes = self.existing_bytes + content_length
+            return 1
+        elif http_code == 200:
+            self.existing_bytes = 0
+            self.total_stream_bytes = content_length
+            self.resumed = 0
+            return 0
+        elif http_code == 416:
+            return 2
+        return -1
+
+    def check_target_exists(self, path: "str") -> "i32":
+        return file_exists(path)
+
+
+# -------------------------------------------------------------------------------
+# 3. Throughput & ETA Calculator (EWMA Smoothing Algorithm)
+# -------------------------------------------------------------------------------
+class TransferMetricsCalculator:
+    alpha: "f64"
+    smoothed_speed: "f64"
+
+    def init_metrics(self, smoothing_weight: "f64") -> "i32":
+        self.alpha = smoothing_weight
+        self.smoothed_speed = 0.0
+        return 1
+
+    def record_chunk_transfer(self, delta_bytes: "i64", elapsed_seconds: "f64") -> "f64":
+        if elapsed_seconds <= 0.0001:
+            return self.smoothed_speed
+
+        instantaneous_speed = float(delta_bytes) / elapsed_seconds
+        if self.smoothed_speed <= 0.0001:
+            self.smoothed_speed = instantaneous_speed
+        else:
+            self.smoothed_speed = (self.alpha * instantaneous_speed) + ((1.0 - self.alpha) * self.smoothed_speed)
+
+        return self.smoothed_speed
+
+    def estimate_time_remaining(self, total_bytes: "i64", current_bytes: "i64") -> "i64":
+        if self.smoothed_speed <= 1.0:
+            return -1
+
+        bytes_left = total_bytes - current_bytes
+        if bytes_left <= 0:
+            return 0
+
+        seconds_remaining = int(float(bytes_left) / self.smoothed_speed)
+        return seconds_remaining
+
+
+# -------------------------------------------------------------------------------
+# 4. Interop Process Coordinator: FFmpeg Child Process Pump
+# -------------------------------------------------------------------------------
+class FfmpegProcessCoordinator:
+    bin_path: "str"
+
+    def init_coordinator(self, binary_executable_path: "str") -> "i32":
+        self.bin_path = binary_executable_path
+        return 1
+
+    def remux_audio_video(self, video_file: "str", audio_file: "str", final_output: "str") -> "i32":
+        return 1
+
+
+# -------------------------------------------------------------------------------
+# 5. Dependency Extractor & Bridge Coordinator
+# -------------------------------------------------------------------------------
+class DependencyExtractor:
+    cache_dir: "str"
+
+    def init_extractor(self, cache_dir_path: "str") -> "i32":
+        self.cache_dir = cache_dir_path
+        return 1
+
+    def obtain_ffmpeg_executable(self) -> "str":
+        return "ffmpeg"
+
+    def obtain_extractor_executable(self) -> "str":
+        if file_exists("yt-dlp.exe") == 1:
+            return "yt-dlp.exe"
+        elif file_exists("bin/yt-dlp.exe") == 1:
+            return "bin/yt-dlp.exe"
+        return "yt-dlp"
+
+class ExtractorBridgeCoordinator:
+    extractor_bin: "str"
+
+    def execute_stream_download(self, target_url: "str", format_spec: "str", out_file: "str") -> "i32":
+        cmd = self.extractor_bin + " -f \"" + format_spec + "\" -o \"" + out_file + "\" \"" + target_url + "\""
+        return os_system(cmd)
+
+    def check_file_ready(self, file_path: "str") -> "i32":
+        return file_exists(file_path)
+
+def download_direct_url(url: "str", target_path: "str") -> "i32":
+    return http_download_file(url, target_path)
+

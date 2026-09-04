@@ -55,17 +55,50 @@ Toàn bộ ứng dụng được đóng gói sẵn trong thư mục phát hành:
 
 ```text
 TokenVector Downloader/
-├── tv-downloader-gui.exe     # Bản giao diện đồ họa Win32 GUI (~16 KB)
-├── tv-downloader-cli.exe     # Bản dòng lệnh Command-Line (~16 KB)
+├── src/                      # Mã nguồn TokenVector Native (.tkv)
+│   ├── gui_runner.tkv        # Điểm vào chính ứng dụng GUI (Entry: run)
+│   ├── cli_runner.tkv        # Điểm vào chính ứng dụng CLI (Entry: main)
+│   └── core_engine.tkv       # Động cơ điều phối phiên tải & logic mạng
+├── il_features/              # Các module tính năng IL Compiler & GUI WinForms
+│   ├── win32_gui_window.tkv  # Giao diện WinForms Native & bộ giải mã luồng
+│   └── ...                   # Toàn bộ module thư viện TokenVector IL
+├── tv-downloader-gui.exe     # Bản thực thi đồ họa Win32 GUI (~16 KB)
+├── tv-downloader-cli.exe     # Bản thực thi dòng lệnh Terminal (~16 KB)
 ├── HUONG_DAN.txt             # Tài liệu hướng dẫn sử dụng nhanh
-└── README.md                 # Giới thiệu & thông tin dự án
+├── LICENSE                   # Giấy phép MIT
+└── README.md                 # Giới thiệu & hướng dẫn kỹ thuật
 ```
 
-### Cách sử dụng:
+### Cách sử dụng file thực thi:
 1. **Khởi chạy GUI:** Click đúp chuột vào file `tv-downloader-gui.exe`.
 2. Dán link YouTube vào ô URL.
 3. Chọn định dạng mong muốn (mặc định đã chọn sẵn 480p).
 4. Nhấn **DOWNLOAD** và tận hưởng tốc độ tải siêu tốc!
+
+---
+
+## 🛠️ Hướng dẫn Tự Biên Dịch từ Mã Nguồn (.tkv)
+
+Bạn có thể tự biên dịch các file mã nguồn `.tkv` thành file nhị phân thực thi `.exe` bằng trình biên dịch **TokenVector Compiler (`tkvc.exe`)** từ dự án [TokenVector](https://github.com/nguyenhungtran18/TokenVector):
+
+### 1. Biên dịch Ứng dụng GUI:
+```powershell
+# Từ thư mục gốc dự án:
+tkvc.exe build src\gui_runner.tkv --entry run --out tv-downloader-gui.exe
+```
+
+### 2. Biên dịch Ứng dụng Dòng lệnh (CLI):
+```powershell
+tkvc.exe build src\cli_runner.tkv --entry main --out tv-downloader-cli.exe
+```
+
+*File thực thi sinh ra là mã máy ảo Native CIL nhị phân siêu nhẹ (~16 KB), chạy ngay tức thì trên Windows mà không cần bất kỳ runtime trung gian nào.*
+
+---
+
+## 📄 Bản quyền & Giấy phép (License)
+
+Dự án được phân phối dưới giấy phép **[MIT License](LICENSE)**. Bạn hoàn toàn tự do sử dụng, sửa đổi và đóng góp phát triển.
 
 ---
 
