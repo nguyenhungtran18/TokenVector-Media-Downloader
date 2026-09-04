@@ -22,9 +22,9 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 
 ---
 
-## ⚖️ Bảng So Sánh Chi Tiết: TokenVector Downloader vs. yt-dlp
+## ⚖️ Bảng So Sánh Chi Tiết: TokenVector Media Downloader vs. yt-dlp
 
-| Tiêu chí so sánh | ⚡ **TokenVector Downloader** | 🐢 **yt-dlp (Truyền thống)** | Ưu thế của TokenVector |
+| Tiêu chí so sánh | ⚡ **TokenVector Media Downloader** | 🐢 **yt-dlp (Truyền thống)** | Ưu thế của TokenVector |
 | :--- | :--- | :--- | :--- |
 | **Ngôn ngữ phát triển** | **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** | Python (C-Python runtime) | Thuần ngôn ngữ mới, kiến trúc tối ưu AOT CIL |
 | **Dung lượng file chạy (.exe)** | **~16 KB (16,384 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Gọn nhẹ gấp >1,000 lần** |
