@@ -1,4 +1,4 @@
-                           # ⚡ TokenVector Media Downloader
+# ⚡ TokenVector Media Downloader
 <p align="center">
   <img src="https://img.shields.io/badge/Language-TokenVector%20(.tkv)-007ACC?style=for-the-badge&logo=codeforces&logoColor=white" alt="TokenVector" />
   <img src="https://img.shields.io/badge/Platform-Windows%20Native%20Win32%20GUI-00A4EF?style=for-the-badge&logo=windows&logoColor=white" alt="Windows" />
