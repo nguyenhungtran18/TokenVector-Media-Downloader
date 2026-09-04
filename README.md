@@ -1,0 +1,83 @@
+# ⚡ TokenVector Media Downloader
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-TokenVector%20(.tkv)-007ACC?style=for-the-badge&logo=codeforces&logoColor=white" alt="TokenVector" />
+  <img src="https://img.shields.io/badge/Platform-Windows%20Native%20Win32%20GUI-00A4EF?style=for-the-badge&logo=windows&logoColor=white" alt="Windows" />
+  <img src="https://img.shields.io/badge/Binary%20Size-~16%20KB-success?style=for-the-badge" alt="Binary Size" />
+  <img src="https://img.shields.io/badge/Dependency-Zero%20Dependency-brightgreen?style=for-the-badge" alt="Zero Dependencies" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License" />
+</p>
+
+---
+
+## 🌟 Giới thiệu
+
+**TokenVector Media Downloader** là ứng dụng tải video và audio đa nền tảng thế hệ mới với hiệu năng đột phá, được viết hoàn toàn bằng **ngôn ngữ lập trình [TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)**.
+
+Khác với các ứng dụng tải media truyền thống cồng kềnh (thường nặng từ 30 MB – 150 MB do đóng gói kèm Python, Node.js hoặc Chromium), **TokenVector Downloader** tận dụng sức mạnh của trình biên dịch TokenVector Compiler (`tkvc`) biên dịch thẳng ra mã máy ảo Native Common Intermediate Language (CIL/MSIL) nhị phân. Kết quả mang lại:
+
+- 🚀 **File thực thi siêu nhỏ gọn:** Toàn bộ ứng dụng GUI đầy đủ tính năng chỉ vỏn vẹn **~16 KB**!
+- ⚡ **Tốc độ khởi động tức thì:** 0 giây delay, mức tiêu hao RAM cực thấp (< 15 MB khi tải).
+- 🛡️ **Zero Dependencies:** Hoạt động độc lập 100%, không cần cài đặt Python, không cần `yt-dlp.exe`, không cần FFmpeg cồng kềnh.
+- 🎨 **Giao diện thuần Native Windows Forms:** Tương thích mượt mà từ Windows 7, 8, 10 đến Windows 11 mà không mở cửa sổ đen CMD.
+
+---
+
+## 💎 Điểm cốt lõi: Sức mạnh của Ngôn ngữ TokenVector
+
+[**TokenVector**](https://github.com/nguyenhungtran18/TokenVector) là ngôn ngữ lập trình tiên tiến do **Trần Nguyên Hùng** nghiên cứu và phát triển, mang triết lý cú pháp thanh lịch, khả năng can thiệp trực tiếp vào tầng IL / Assembly và tối ưu hóa nhị phân ở mức tối đa:
+
+* **Tương tác trực tiếp với .NET CLR & Win32 API:** Khởi tạo các thành phần giao diện đồ họa `System.Windows.Forms`, điều khiển thread và luồng mạng HTTP/HTTPS với hiệu năng đỉnh cao.
+* **Bộ đệm thông minh High-Throughput:** Xử lý luồng tải mạng với buffer tối ưu 128 KB (`131072` bytes) giúp giảm thiểu context-switching và khai thác tối đa băng thông đường truyền.
+* **Cơ chế hủy an toàn (Instant Cancel & Clean):** Cho phép người dùng dừng tác vụ tải bất cứ lúc nào qua nút **STOP**, tự động thu hồi tài nguyên và dọn dẹp các tệp tạm dở dang (`.part`).
+
+---
+
+## ✨ Tính năng nổi bật
+
+- [x] **Chuẩn mặc định 480p YouTube:** Tải nhanh, file nhẹ (~10 - 15 MB/video), đáp ứng hoàn hảo tiêu chuẩn phổ thông.
+- [x] **Hỗ trợ đa định dạng Video & Audio:**
+  - 🎬 **Video:** `MP4 (480p Standard - Mặc định)`, `MP4 (720p HD)`, `MP4 (1080p Full HD)`, `MKV (1080p High Quality)`, `WebM (Chuẩn gốc YouTube)`.
+  - 🎵 **Audio:** `MP3 (320kbps)`, `M4A (AAC)`, `WAV (Lossless)`, `FLAC (Studio Lossless)`.
+- [x] **Thanh tiến trình thông minh (Dynamic Adaptive ProgressBar):**
+  - Tự động hiển thị chính xác % khi máy chủ trả về `Content-Length`.
+  - Chuyển đổi sang hiệu ứng dải sáng động (`ProgressBarStyle.Marquee`) khi tải dạng `Transfer-Encoding: chunked`, liên tục cập nhật dung lượng MB thực nhận.
+- [x] **Tùy chọn thư mục lưu trữ:** Cho phép chọn nhanh thư mục lưu tệp tải qua hộp thoại Browse folder trực quan.
+- [x] **Tích hợp cả phiên bản CLI và GUI:**
+  - `tv-downloader-gui.exe`: Ứng dụng đồ họa người dùng.
+  - `tv-downloader-cli.exe`: Dành cho lập trình viên chạy lệnh terminal hoặc tích hợp kịch bản tự động.
+
+---
+
+## 📦 Bộ cài đặt & Cấu trúc
+
+Toàn bộ ứng dụng được đóng gói sẵn trong thư mục phát hành:
+
+```text
+TokenVector Downloader/
+├── tv-downloader-gui.exe     # Bản giao diện đồ họa Win32 GUI (~16 KB)
+├── tv-downloader-cli.exe     # Bản dòng lệnh Command-Line (~16 KB)
+├── HUONG_DAN.txt             # Tài liệu hướng dẫn sử dụng nhanh
+└── README.md                 # Giới thiệu & thông tin dự án
+```
+
+### Cách sử dụng:
+1. **Khởi chạy GUI:** Click đúp chuột vào file `tv-downloader-gui.exe`.
+2. Dán link YouTube vào ô URL.
+3. Chọn định dạng mong muốn (mặc định đã chọn sẵn 480p).
+4. Nhấn **DOWNLOAD** và tận hưởng tốc độ tải siêu tốc!
+
+---
+
+## 👨‍💻 Tác giả & Liên hệ
+
+* **Tác giả:** Trần Nguyên Hùng
+* **Email:** [nguyen.hung.tran.18@gmail.com](mailto:nguyen.hung.tran.18@gmail.com)
+* **Dự án Ngôn ngữ TokenVector:** [https://github.com/nguyenhungtran18/TokenVector](https://github.com/nguyenhungtran18/TokenVector)
+* **Mã nguồn Downloader:** [https://github.com/nguyenhungtran18/TokenVector-Downloader](https://github.com/nguyenhungtran18/TokenVector-Downloader)
+
+---
+
+<p align="center">
+  <i>Được xây dựng với niềm tự hào công nghệ bằng ngôn ngữ lập trình <b>TokenVector</b>.</i>
+</p>
