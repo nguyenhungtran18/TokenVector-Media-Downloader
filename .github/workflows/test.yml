@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
 
       - name: Setup Mono (Linux)
         if: runner.os == 'Linux'
