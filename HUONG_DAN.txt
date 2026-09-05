@@ -8,13 +8,17 @@ Email: nguyen.hung.tran.18@gmail.com
 Thu muc nay chua cac file thuc thi can thiet:
 
 1. tv-downloader-gui.exe (Dung luong sieu nhe ~16 KB)
-   - Click dup chuot truc tiep de mo giao dien do hoa Windows Forms.
-   - Thuan Native Windows Forms (Subsystem GUI), khong co cua so den CMD.
+   - Windows: Click dup chuot truc tiep de mo giao dien do hoa Windows Forms.
+   - Linux: mono tv-downloader-gui.exe (yeu cau: mono-runtime, libgdiplus, mono-winforms)
+   - macOS: mono tv-downloader-gui.exe (yeu cau: mono-mdk, xquartz)
+   - Thuan Native Windows Forms (Subsystem GUI), khong co cua so den CMD tren Windows.
    - Tu dong phan giai luong va tai media truc tiep bang HTTP Native cua TokenVector.
    - 100% Doc lap, KHONG can bat ky file phu thuoc hay yt-dlp.exe nao.
    - Ho tro chon thu muc luu, chon 7 dinh dang (MP4, MKV, WebM, MP3, M4A, WAV, FLAC).
    - Co nut STOP huy tai tuc thi va tu dong don dep sach file do dang.
 
 2. tv-downloader-cli.exe (~16 KB)
-   - Ung dung chay qua command-line / terminal:
+   - Windows (CMD/PowerShell):
      tv-downloader-cli.exe <link_youtube>
+   - Linux / macOS:
+     mono tv-downloader-cli.exe <link_youtube>

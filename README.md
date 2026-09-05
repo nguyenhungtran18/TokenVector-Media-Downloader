@@ -1,24 +1,24 @@
 # ⚡ TokenVector Media Downloader
 <p align="center">
   <img src="https://img.shields.io/badge/Language-TokenVector%20(.tkv)-007ACC?style=for-the-badge&logo=codeforces&logoColor=white" alt="TokenVector" />
-  <img src="https://img.shields.io/badge/Platform-Windows%20Native%20Win32%20GUI-00A4EF?style=for-the-badge&logo=windows&logoColor=white" alt="Windows" />
-  <img src="https://img.shields.io/badge/Binary%20Size-~16%20KB-success?style=for-the-badge" alt="Binary Size" />
-  <img src="https://img.shields.io/badge/Dependency-Zero%20Dependency-brightgreen?style=for-the-badge" alt="Zero Dependencies" />
-  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-success?style=for-the-badge" alt="Cross Platform" />
+  <img src="https://img.shields.io/badge/CI%20Matrix-Ubuntu%20%7C%20macOS%20%7C%20Windows%20Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI Passing" />
+  <img src="https://img.shields.io/badge/Binary%20Size-~16%20KB-blue?style=for-the-badge" alt="Binary Size" />
+  <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
 </p>
 
 ---
 
 ## 🌟 Giới thiệu
 
-**TokenVector Media Downloader** là ứng dụng tải video và audio đa nền tảng thế hệ mới với hiệu năng đột phá, được viết hoàn toàn bằng **ngôn ngữ lập trình [TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)**.
+**TokenVector Media Downloader** là ứng dụng tải video và audio đa nền tảng (**Windows, Linux, macOS**) với hiệu năng đột phá, được viết hoàn toàn bằng **ngôn ngữ lập trình [TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)**.
 
 Khác với các ứng dụng tải media truyền thống cồng kềnh (thường nặng từ 30 MB – 150 MB do đóng gói kèm Python, Node.js hoặc Chromium), **TokenVector Downloader** tận dụng sức mạnh của trình biên dịch TokenVector Compiler (`tkvc`) biên dịch thẳng ra mã máy ảo Native Common Intermediate Language (CIL/MSIL) nhị phân. Kết quả mang lại:
 
-- 🚀 **File thực thi siêu nhỏ gọn:** Toàn bộ ứng dụng GUI đầy đủ tính năng chỉ vỏn vẹn **~16 KB**!
+- 🚀 **File thực thi siêu nhỏ gọn:** Toàn bộ ứng dụng đầy đủ tính năng chỉ vỏn vẹn **~16 KB**!
 - ⚡ **Tốc độ khởi động tức thì:** 0 giây delay, mức tiêu hao RAM cực thấp (< 15 MB khi tải).
-- 🛡️ **Zero Dependencies:** Hoạt động độc lập 100%, không cần cài đặt Python, không cần `yt-dlp.exe`, không cần FFmpeg cồng kềnh.
-- 🎨 **Giao diện thuần Native Windows Forms:** Tương thích mượt mà từ Windows 7, 8, 10 đến Windows 11 mà không mở cửa sổ đen CMD.
+- 🛡️ **Zero Dependencies:** Hoạt động độc lập, tự động phân giải luồng và tải HTTP stream trực tiếp.
+- 🌐 **Đa nền tảng thực sự (Cross-Platform):** Chạy mượt mà trên **Windows** (Native PE), **Linux** (Ubuntu, Debian, Arch...) và **macOS** (Apple Silicon & Intel) cho cả chế độ Giao diện đồ họa (GUI) lẫn Dòng lệnh (CLI).
 
 ---
 
@@ -29,12 +29,12 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 | **Ngôn ngữ phát triển** | **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** | Python (C-Python runtime) | Thuần ngôn ngữ mới, kiến trúc tối ưu AOT CIL |
 | **Dung lượng file chạy (.exe)** | **~16 KB (16,384 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Gọn nhẹ gấp >1,000 lần** |
 | **Phụ thuộc bên thứ ba (Dependencies)** | **0 (Zero Dependency)** | Cần Python Runtime, FFmpeg (~80 MB) để merge audio/video | Chạy ngay độc lập, không cần bất kỳ công cụ ngoài |
-| **Giao diện người dùng (UI)** | **Native Win32 GUI (Windows Forms)** sạch sẽ, hiện đại | Chỉ có Command-Line (CLI), cần wrapper phức tạp | Trực quan, thân thiện, không hiện cửa sổ đen CMD |
+| **Giao diện người dùng (UI)** | **Đa nền tảng GUI (WinForms) & CLI** trực quan, gọn nhẹ | Chỉ có Command-Line (CLI), cần wrapper phức tạp | Trực quan, thân thiện trên cả Windows, Linux, macOS |
 | **Tốc độ khởi động** | **Tức thì (Instant < 50ms)** | 1.5s – 3.5s (do phải bung nén môi trường Python) | Nhanh hơn vượt trội, không độ trễ |
 | **Mức tiêu hao bộ nhớ RAM** | **~12 MB – 18 MB** | ~60 MB – 150 MB (Python VM + child processes) | Tiết kiệm tài nguyên máy tính tối đa |
 | **Thanh tiến trình (Progress)** | Tự thích ứng: % chính xác & dải sáng xanh động (`Marquee`) | Chỉ có text console dòng lệnh | Theo dõi trực quan, mượt mà |
 | **Hủy & Dọn dẹp an toàn (Stop)** | Nút **STOP** một chạm, tự động thu hồi luồng và dọn sạch `.part` | Nhấn `Ctrl+C` dễ để lại file rác dở dang | An toàn cho ổ đĩa, không lưu file hỏng |
-| **Khả năng đóng gói & phân phối** | Sao chép 1 file `.exe` 16KB là chạy ngay trên mọi máy Windows | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email trong tích tắc |
+| **Khả năng đóng gói & phân phối** | Chạy file 16 KB trên Windows, Linux & macOS | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email/AirDrop tức thì |
 
 > 💡 **Tóm lại:** Nếu `yt-dlp` là một cỗ máy nặng nề đóng gói cả hệ sinh thái Python cồng kềnh phục vụ nghiên cứu phức tạp, thì **TokenVector Media Downloader** là một giải pháp tinh gọn, sắc bén và tối ưu hóa đến từng byte nhị phân: tải nhanh, dung lượng siêu nhẹ, giao diện đẹp và không phụ thuộc bất kỳ runtime nào.
 
@@ -68,29 +68,38 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 
 ## 📦 Bộ cài đặt & Cấu trúc
 
-Toàn bộ ứng dụng được đóng gói sẵn trong thư mục phát hành:
+Toàn bộ dự án và ứng dụng đóng gói sẵn:
 
 ```text
-TokenVector Downloader/
+TokenVector-Media-Downloader/
+├── .github/workflows/        # CI/CD Matrix tự động kiểm thử (Ubuntu, macOS, Windows)
 ├── src/                      # Mã nguồn TokenVector Native (.tkv)
 │   ├── gui_runner.tkv        # Điểm vào chính ứng dụng GUI (Entry: run)
 │   ├── cli_runner.tkv        # Điểm vào chính ứng dụng CLI (Entry: main)
-│   └── core_engine.tkv       # Động cơ điều phối phiên tải & logic mạng
+│   └── core_engine.tkv       # Động cơ điều phối phiên tải, mạng & POSIX Bridge
 ├── il_features/              # Các module tính năng IL Compiler & GUI WinForms
 │   ├── win32_gui_window.tkv  # Giao diện WinForms Native & bộ giải mã luồng
 │   └── ...                   # Toàn bộ module thư viện TokenVector IL
-├── tv-downloader-gui.exe     # Bản thực thi đồ họa Win32 GUI (~16 KB)
-├── tv-downloader-cli.exe     # Bản thực thi dòng lệnh Terminal (~16 KB)
+├── tv-downloader-gui.exe     # Bản thực thi đồ họa GUI (~16 KB, chạy trên Win/Linux/macOS)
+├── tv-downloader-cli.exe     # Bản thực thi dòng lệnh CLI (~16 KB, chạy trên Win/Linux/macOS)
+├── build.bat                 # Script tự động build trên Windows
+├── build.sh                  # Script tự động build trên Linux & macOS
 ├── HUONG_DAN.txt             # Tài liệu hướng dẫn sử dụng nhanh
 ├── LICENSE                   # Giấy phép MIT
 └── README.md                 # Giới thiệu & hướng dẫn kỹ thuật
 ```
 
-### Cách sử dụng file thực thi:
-1. **Khởi chạy GUI:** Click đúp chuột vào file `tv-downloader-gui.exe`.
-2. Dán link YouTube vào ô URL.
-3. Chọn định dạng mong muốn (mặc định đã chọn sẵn 480p).
-4. Nhấn **DOWNLOAD** và tận hưởng tốc độ tải siêu tốc!
+### Cách khởi chạy ứng dụng:
+
+- **Trên Windows:**
+  - **Khởi chạy GUI:** Click đúp chuột trực tiếp vào file `tv-downloader-gui.exe`.
+  - **Khởi chạy CLI:** Mở Command Prompt / PowerShell: `.\tv-downloader-cli.exe <link_youtube>`.
+- **Trên Linux:**
+  - **GUI:** `mono tv-downloader-gui.exe`
+  - **CLI:** `mono tv-downloader-cli.exe <link_youtube>`
+- **Trên macOS:**
+  - **GUI:** `mono tv-downloader-gui.exe`
+  - **CLI:** `mono tv-downloader-cli.exe <link_youtube>`
 
 ---
 
