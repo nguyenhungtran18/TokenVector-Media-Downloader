@@ -8,6 +8,15 @@
 
 # -------------------------------------------------------------------------------
 def get_platform_os() -> "str":
+    # Su dung path_dirname hoac bien moi truong de xac dinh platform
+    # Tren POSIX (Linux/macOS), PATH thuong co / hoac bien HOME ton tai
+    home_dir = os_getenv("HOME")
+    if len(home_dir) > 0:
+        # Kiem tra Darwin (macOS) hoac Linux
+        user_env = os_getenv("USER")
+        if file_exists("/System/Library/CoreServices/SystemVersion.plist") == 1:
+            return "macOS"
+        return "Linux"
     return "Windows"
 
 def init_core_engine() -> "i32":
@@ -17,9 +26,11 @@ class PosixRuntimeBridge:
     is_active: "i32"
     def grant_execution_rights(self, target_binary_path: "str") -> "i32":
         current_platform = get_platform_os()
-        if current_platform == "Windows":
+        if current_platform == "Linux" or current_platform == "macOS":
+            chmod_cmd = "chmod +x \"" + target_binary_path + "\""
+            os_system(chmod_cmd)
             return 1
-        return 0
+        return 1
 
 
 # -------------------------------------------------------------------------------
@@ -133,6 +144,10 @@ class DependencyExtractor:
             return "yt-dlp.exe"
         elif file_exists("bin/yt-dlp.exe") == 1:
             return "bin/yt-dlp.exe"
+        elif file_exists("yt-dlp") == 1:
+            return "./yt-dlp"
+        elif file_exists("bin/yt-dlp") == 1:
+            return "./bin/yt-dlp"
         return "yt-dlp"
 
 class ExtractorBridgeCoordinator:

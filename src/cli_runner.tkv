@@ -107,6 +107,6 @@ def main() -> "i32":
     print("=== Tong ket tien trinh Media Downloader ===")
     print("[SUCCESS] Audio Track: " + audio_file + " (38,172,368 bytes)")
     print("[SUCCESS] Video Track: " + video_file + " (42,860,801 bytes)")
-    print("[SUCCESS] Toan bo du lieu da duoc dong bo xuong thu muc D:\\yt-dlp\\")
+    print("[SUCCESS] Toan bo du lieu da duoc dong bo xuong thu muc hien tai (./)")
 
     return 0

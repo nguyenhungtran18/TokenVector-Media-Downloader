@@ -108,10 +108,18 @@ tkvc.exe build src\gui_runner.tkv --entry run --out tv-downloader-gui.exe
 ```powershell
 tkvc.exe build src\cli_runner.tkv --entry main --out tv-downloader-cli.exe
 ```
+### 3. Chạy trên Linux & macOS:
+Ứng dụng được biên dịch chuẩn .NET CIL nhị phân, có thể chạy trực tiếp trên môi trường Linux và macOS thông qua Mono runtime:
+```bash
+# Cài đặt Mono (Ubuntu/Debian)
+sudo apt-get install mono-runtime mono-devel
 
-*File thực thi sinh ra là mã máy ảo Native CIL nhị phân siêu nhẹ (~16 KB), chạy ngay tức thì trên Windows mà không cần bất kỳ runtime trung gian nào.*
+# Chạy bản dòng lệnh (CLI):
+mono tv-downloader-cli.exe
 
----
+# Chạy bản giao diện đồ họa (GUI):
+mono tv-downloader-gui.exe
+```
 
 ## 📄 Bản quyền & Giấy phép (License)
 
