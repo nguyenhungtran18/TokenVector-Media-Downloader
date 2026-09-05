@@ -109,16 +109,31 @@ tkvc.exe build src\gui_runner.tkv --entry run --out tv-downloader-gui.exe
 tkvc.exe build src\cli_runner.tkv --entry main --out tv-downloader-cli.exe
 ```
 ### 3. Chạy trên Linux & macOS:
-Ứng dụng được biên dịch chuẩn .NET CIL nhị phân, có thể chạy trực tiếp trên môi trường Linux và macOS thông qua Mono runtime:
+Ứng dụng được biên dịch theo chuẩn **.NET CIL nhị phân**, hỗ trợ chạy cả giao diện đồ họa **GUI (Windows Forms)** và dòng lệnh **CLI** trên Linux và macOS thông qua Mono runtime:
+
+#### A. Trên Linux (Ubuntu / Debian / Linux Mint):
 ```bash
-# Cài đặt Mono (Ubuntu/Debian)
-sudo apt-get install mono-runtime mono-devel
+# 1. Cài đặt Mono runtime và thư viện đồ họa GDI+ / WinForms:
+sudo apt-get update
+sudo apt-get install -y mono-runtime mono-devel libgdiplus mono-winforms
 
-# Chạy bản dòng lệnh (CLI):
-mono tv-downloader-cli.exe
-
-# Chạy bản giao diện đồ họa (GUI):
+# 2. Khởi chạy ứng dụng đồ họa (GUI Form):
 mono tv-downloader-gui.exe
+
+# 3. Khởi chạy ứng dụng dòng lệnh (CLI):
+mono tv-downloader-cli.exe <link_youtube>
+```
+
+#### B. Trên macOS:
+```bash
+# 1. Cài đặt Mono trọn bộ và X11 Server (XQuartz để vẽ giao diện Form):
+brew install --cask xquartz mono-mdk
+
+# 2. Khởi chạy ứng dụng đồ họa (GUI Form):
+mono tv-downloader-gui.exe
+
+# 3. Khởi chạy ứng dụng dòng lệnh (CLI):
+mono tv-downloader-cli.exe <link_youtube>
 ```
 
 ## 📄 Bản quyền & Giấy phép (License)
