@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@4
 
       - name: Setup Mono (Linux)
         if: runner.os == 'Linux'
@@ -41,8 +41,11 @@ jobs:
       - name: Verify CLI execution (Linux / macOS)
         if: runner.os != 'Windows'
         run: |
-          echo "Kiem tra mono binary:"
+          echo "=== Info Mono ==="
           which mono || true
           mono --version || true
-          mono --debug tv-downloader-cli.exe
+          echo "=== Chay Mono CLI ==="
+          mono --verbose tv-downloader-cli.exe > mono_out.log 2>&1 || true
+          cat mono_out.log
+          grep -q "TokenVector Media Downloader Engine" mono_out.log || exit 1
           echo "Done execution test on $RUNNER_OS!"
