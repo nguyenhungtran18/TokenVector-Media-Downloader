@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@4
 
       - name: Setup Mono (Linux)
         if: runner.os == 'Linux'
@@ -44,9 +44,5 @@ jobs:
           echo "Kiem tra mono binary:"
           which mono || true
           mono --version || true
-          mono --debug tv-downloader-cli.exe || {
-	    echo "Loi khi chay mono, in chi tiet:"
-	    mono --trace=N:mscorlib tv-downloader-cli.exe || true
-	    exit 1
-	  }
+          mono --debug tv-downloader-cli.exe
           echo "Done execution test on $RUNNER_OS!"
