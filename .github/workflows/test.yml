@@ -18,18 +18,19 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@4
 
-      - name: Setup Mono (Linux / macOS)
-        if: runner.os != 'Windows'
+      - name: Setup Mono (Linux)
+        if: runner.os == 'Linux'
         run: |
-          if [ "$RUNNER_OS" = "Linux" ]; then
-            sudo apt-get update
-            sudo apt-get install -y mono-runtime mono-devel
-          elif [ "$RUNNER_OS" = "macOS" ]; then
-            brew install mono || true
-          fi
+          sudo apt-get update
+          sudo apt-get install -y mono-runtime mono-devel
 
+      - name: Setup Mono (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install mono || brew install --cask mono-mdk || true
+          echo "/Library/Frameworks/Mono.framework/Versions/Current/bin" >> $GITHUB_PATH
 
       - name: Verify CLI execution (Windows)
         if: runner.os == 'Windows'
@@ -37,8 +38,15 @@ jobs:
           .\tv-downloader-cli.exe
           echo "Windows execution test passed!"
 
-      - name: Verify CLI execution via Mono (Linux / macOS)
+      - name: Verify CLI execution (Linux / macOS)
         if: runner.os != 'Windows'
         run: |
-          mono tv-downloader-cli.exe
-          echo "Execution test passed!"
+          echo "Kiem tra mono binary:"
+          which mono || true
+          mono --version || true
+          mono --debug tv-downloader-cli.exe || {
+	    echo "Loi khi chay mono, in chi tiet:"
+	    mono --trace=N:mscorlib tv-downloader-cli.exe || true
+	    exit 1
+	  }
+          echo "Done execution test on $RUNNER_OS!"
