@@ -6,3 +6,7 @@ bin/
 *.log
 *.tmp
 TOKENVECTOR_EXPERIENCE.md
+tokenvector-grammar/
+linguist-submission/
+*.srt
+*_transcript.txt

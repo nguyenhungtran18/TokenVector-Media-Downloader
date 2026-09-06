@@ -34,7 +34,7 @@ def main() -> "i32":
     print("[INFO] Subsystem: 3 (Console CUI) | Engine: AOT CIL Unboxed Native")
 
     args = sys_argv()
-    target_media_url = "https://youtu.be/bZ0aLE4L9Go?si=Kyi0J9pcAt7IHxA5"
+    target_media_url = ""
     if len(args) > 1:
         target_media_url = args[1]
 
