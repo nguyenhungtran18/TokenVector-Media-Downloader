@@ -38,7 +38,7 @@ Unlike traditional media downloaders that are notoriously heavy (often 30 MB –
 | **RAM Footprint** | **~12 MB – 18 MB** | ~60 MB – 150 MB (Python VM + child processes) | Maximum system resource efficiency |
 | **Progress Indicator** | Adaptive: Exact % & animated pulsing glow (`Marquee`) | Plain console text output | Smooth visual tracking |
 | **Safe Stop & Cleanup** | One-touch **STOP** button, instantly releases threads & cleans `.part` files | Pressing `Ctrl+C` often leaves orphaned temp files | Safe for disk storage, never leaves corrupted files |
-| **HLS Stream (.m3u8) Support** | **Built-in Native CIL HLS Parser & Segment Merger** | Relies on external FFmpeg binary | Direct streaming, auto-merges into MP4 with zero dependencies |
+| **HLS Stream (.m3u8) Support** | **Built-in Native CIL HLS Parser, Auto-Sniffer & 3-Layer Anti-Ad Filter** | Relies on external FFmpeg binary | Auto-sniffs .m3u8 from web pages, filters out 5s/15s ads, merges into MP4 |
 | **Transcript & Subtitle Extraction** | **Dedicated `[ GET TRANSCRIPT ]` button (downloads both `.srt` & `_transcript.txt`)** | Requires extra Python script (`yt-dlp-transcript`) + `srt` lib | 1-click instant extraction, no Python, LLM AI ready |
 | **Packaging & Portability** | Single portable ~25 KB file for Windows, Linux & macOS | Requires multi-megabyte installers or Python/Pip setup | Instant distribution via Email, Chat, AirDrop |
 

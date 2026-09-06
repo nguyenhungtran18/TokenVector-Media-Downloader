@@ -38,7 +38,7 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 | **Mức tiêu hao bộ nhớ RAM** | **~12 MB – 18 MB** | ~60 MB – 150 MB (Python VM + child processes) | Tiết kiệm tài nguyên máy tính tối đa |
 | **Thanh tiến trình (Progress)** | Tự thích ứng: % chính xác & dải sáng xanh động (`Marquee`) | Chỉ có text console dòng lệnh | Theo dõi trực quan, mượt mà |
 | **Hủy & Dọn dẹp an toàn (Stop)** | Nút **STOP** một chạm, tự động thu hồi luồng và dọn sạch `.part` | Nhấn `Ctrl+C` dễ để lại file rác dở dang | An toàn cho ổ đĩa, không lưu file hỏng |
-| **Hỗ trợ luồng HLS (.m3u8)** | **Tích hợp sẵn bộ bóc tách & ghép nối HLS CIL thuần** | Phụ thuộc hoàn toàn vào nhị phân FFmpeg ngoài | Tự động ghép thành MP4 với 0 dependencies |
+| **Hỗ trợ luồng HLS (.m3u8)** | **Tự động dò tìm (Auto-Sniffer) & Bộ lọc quảng cáo 3 lớp thông minh** | Phụ thuộc hoàn toàn vào nhị phân FFmpeg ngoài | Tự cào link .m3u8 từ web phim, lọc bỏ clip quảng cáo, ghép MP4 |
 | **Trích xuất Transcript & Phụ đề** | **Nút bấm riêng `[ GET TRANSCRIPT ]` (tải đồng thời `.srt` & `_transcript.txt`)** | Cần script Python phụ (`yt-dlp-transcript`) + cài thư viện `srt` | 1 click tải tức thì, không cần Python, sẵn sàng nạp LLM AI |
 | **Khả năng đóng gói & phân phối** | Chạy file 25 KB trên Windows, Linux & macOS | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email/AirDrop tức thì |
 
