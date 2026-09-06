@@ -61,7 +61,7 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
   - 🔘 **Thao tác độc lập:** Không cần vào menu chọn định dạng, chỉ cần dán URL và bấm nút **`[ GET TRANSCRIPT ]`** là tải ngay tức thì.
   - 📝 **Tự động xuất đồng thời 2 tệp tin:**
     - `[Tên_Video].srt`: Phụ đề tiêu chuẩn có timestamp chính xác từng mili-giây, tương thích mọi trình phát VLC, YouTube, CapCut, Premiere,...
-    - `[Tên_Video]_transcript.txt`: Toàn bộ lời thoại video nối liền dạng văn bản thuần (Full text), cực kỳ lý tưởng để đọc nhanh hoặc đưa vào các mô hình AI (ChatGPT, Claude, Gemini) tóm tắt bài giảng, podcast.
+    - `[Tên_Video]_transcript.txt`: Lời thoại dạng Timeline trực quan với mốc thời gian `[mm:ss]` (hoặc `[hh:mm:ss]`) ở đầu mỗi dòng, khớp 100% với thanh Timeline của YouTube, cực kỳ lý tưởng để theo dõi bài giảng, tra cứu video và nạp vào AI tóm tắt.
   - ⚡ **Thuần Native TokenVector CIL:** Bắt tay trực tiếp với YouTube InnerTube API (Client Android) để bypass triệt để mã kiểm duyệt PO token (Proof-of-Origin) mà **100% không dùng Python**, không phụ thuộc `yt-dlp.exe` hay FFmpeg. Tốc độ trích xuất tức thì (~1 giây)!
 - [x] **Giao diện người dùng chuẩn hóa 100% tiếng Anh (Standardized Clean UI):**
   - Loại bỏ hoàn toàn các lỗi font bảng mã ANSI/Unicode trên Windows Forms cũ.

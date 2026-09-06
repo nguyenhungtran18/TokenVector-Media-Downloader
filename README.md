@@ -61,7 +61,7 @@ Unlike traditional media downloaders that are notoriously heavy (often 30 MB –
   - 🔘 **Independent Operation:** No need to navigate dropdown menus—paste the URL and click **`[ GET TRANSCRIPT ]`** to download immediately.
   - 📝 **Simultaneous Dual-Format Output:**
     - `[Video_Title].srt`: Standard subtitle file with millisecond-accurate timestamps, ready for VLC, YouTube, CapCut, Premiere, etc.
-    - `[Video_Title]_transcript.txt`: Clean, continuous full-text transcript, ideal for quick reading or feeding into AI models (ChatGPT, Claude, Gemini) for summaries.
+    - `[Video_Title]_transcript.txt`: Formatted timeline transcript with clean `[mm:ss]` (or `[hh:mm:ss]`) timestamps on every line, perfectly matching YouTube's video timeline for effortless reading, quick reference, and AI summarization.
   - ⚡ **100% Native TokenVector CIL:** Directly negotiates with YouTube InnerTube API (Android Client) to bypass PO token restrictions without Python, `yt-dlp.exe`, or FFmpeg. Extracts in ~1 second!
 - [x] **Standardized Clean English UI:**
   - Completely avoids legacy ANSI/Unicode code-page rendering issues on Windows Forms.
