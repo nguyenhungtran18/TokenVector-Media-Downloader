@@ -3,7 +3,7 @@
   <img src="https://img.shields.io/badge/Language-TokenVector%20(.tkv)-007ACC?style=for-the-badge&logo=codeforces&logoColor=white" alt="TokenVector" />
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-success?style=for-the-badge" alt="Cross Platform" />
   <img src="https://img.shields.io/badge/CI%20Matrix-Ubuntu%20%7C%20macOS%20%7C%20Windows%20Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI Passing" />
-  <img src="https://img.shields.io/badge/Binary%20Size-~16%20KB-blue?style=for-the-badge" alt="Binary Size" />
+  <img src="https://img.shields.io/badge/Binary%20Size-~22%20KB-blue?style=for-the-badge" alt="Binary Size" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
 </p>
 
@@ -15,7 +15,7 @@
 
 Khác với các ứng dụng tải media truyền thống cồng kềnh (thường nặng từ 30 MB – 150 MB do đóng gói kèm Python, Node.js hoặc Chromium), **TokenVector Downloader** tận dụng sức mạnh của trình biên dịch TokenVector Compiler (`tkvc`) biên dịch thẳng ra mã máy ảo Native Common Intermediate Language (CIL/MSIL) nhị phân. Kết quả mang lại:
 
-- 🚀 **File thực thi siêu nhỏ gọn:** Toàn bộ ứng dụng đầy đủ tính năng chỉ vỏn vẹn **~16 KB**!
+- 🚀 **File thực thi siêu nhỏ gọn:** Toàn bộ ứng dụng đầy đủ tính năng chỉ vỏn vẹn **~22 KB**!
 - ⚡ **Tốc độ khởi động tức thì:** 0 giây delay, mức tiêu hao RAM cực thấp (< 15 MB khi tải).
 - 🛡️ **Zero Dependencies:** Hoạt động độc lập, tự động phân giải luồng và tải HTTP stream trực tiếp.
 - 🌐 **Đa nền tảng thực sự (Cross-Platform):** Chạy mượt mà trên **Windows** (Native PE), **Linux** (Ubuntu, Debian, Arch...) và **macOS** (Apple Silicon & Intel) cho cả chế độ Giao diện đồ họa (GUI) lẫn Dòng lệnh (CLI).
@@ -27,15 +27,15 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 | Tiêu chí so sánh | ⚡ **TokenVector Media Downloader** | 🐢 **yt-dlp (Truyền thống)** | Ưu thế của TokenVector |
 | :--- | :--- | :--- | :--- |
 | **Ngôn ngữ phát triển** | **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** | Python (C-Python runtime) | Thuần ngôn ngữ mới, kiến trúc tối ưu AOT CIL |
-| **Dung lượng file chạy (.exe)** | **~16 KB (16,384 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Gọn nhẹ gấp >1,000 lần** |
+| **Dung lượng file chạy (.exe)** | **~22 KB (22,016 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Gọn nhẹ gấp >1,000 lần** |
 | **Phụ thuộc bên thứ ba (Dependencies)** | **0 (Zero Dependency)** | Cần Python Runtime, FFmpeg (~80 MB) để merge audio/video | Chạy ngay độc lập, không cần bất kỳ công cụ ngoài |
 | **Giao diện người dùng (UI)** | **Đa nền tảng GUI (WinForms) & CLI** trực quan, gọn nhẹ | Chỉ có Command-Line (CLI), cần wrapper phức tạp | Trực quan, thân thiện trên cả Windows, Linux, macOS |
 | **Tốc độ khởi động** | **Tức thì (Instant < 50ms)** | 1.5s – 3.5s (do phải bung nén môi trường Python) | Nhanh hơn vượt trội, không độ trễ |
 | **Mức tiêu hao bộ nhớ RAM** | **~12 MB – 18 MB** | ~60 MB – 150 MB (Python VM + child processes) | Tiết kiệm tài nguyên máy tính tối đa |
 | **Thanh tiến trình (Progress)** | Tự thích ứng: % chính xác & dải sáng xanh động (`Marquee`) | Chỉ có text console dòng lệnh | Theo dõi trực quan, mượt mà |
 | **Hủy & Dọn dẹp an toàn (Stop)** | Nút **STOP** một chạm, tự động thu hồi luồng và dọn sạch `.part` | Nhấn `Ctrl+C` dễ để lại file rác dở dang | An toàn cho ổ đĩa, không lưu file hỏng |
-| **Trích xuất Transcript & Phụ đề** | **Tự động xuất cả `.srt` và `_transcript.txt` qua InnerTube (1 cú click)** | Cần script Python phụ (`yt-dlp-transcript`) + cài thư viện `srt` | Nhanh gọn, không cần Python, sẵn sàng nạp LLM AI |
-| **Khả năng đóng gói & phân phối** | Chạy file 16 KB trên Windows, Linux & macOS | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email/AirDrop tức thì |
+| **Trích xuất Transcript & Phụ đề** | **Nút bấm riêng `[ GET TRANSCRIPT ]` (tải đồng thời `.srt` & `_transcript.txt`)** | Cần script Python phụ (`yt-dlp-transcript`) + cài thư viện `srt` | 1 click tải tức thì, không cần Python, sẵn sàng nạp LLM AI |
+| **Khả năng đóng gói & phân phối** | Chạy file 22 KB trên Windows, Linux & macOS | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email/AirDrop tức thì |
 
 > 💡 **Tóm lại:** Nếu `yt-dlp` là một cỗ máy nặng nề đóng gói cả hệ sinh thái Python cồng kềnh phục vụ nghiên cứu phức tạp, thì **TokenVector Media Downloader** là một giải pháp tinh gọn, sắc bén và tối ưu hóa đến từng byte nhị phân: tải nhanh, dung lượng siêu nhẹ, giao diện đẹp và không phụ thuộc bất kỳ runtime nào.
 
@@ -53,15 +53,19 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 
 ## ✨ Tính năng nổi bật
 
-- [x] **Chuẩn mặc định 480p YouTube:** Tải nhanh, file nhẹ (~10 - 15 MB/video), đáp ứng hoàn hảo tiêu chuẩn phổ thông.
-- [x] **Trích xuất Transcript & Phụ đề YouTube (Subtitles & Full Transcript):**
-  - 📝 **Tự động sinh 2 định dạng song song:**
-    - `[Tên_Video].srt`: Phụ đề tiêu chuẩn có timestamp chính xác đến mili-giây, sẵn sàng import vào VLC, CapCut, Premiere,...
-    - `[Tên_Video]_transcript.txt`: Toàn bộ lời thoại video nối liền dạng văn bản thuần, tối ưu để đọc nhanh hoặc đưa vào các mô hình AI (ChatGPT, Claude, Gemini) để tóm tắt nội dung.
-  - ⚡ **Thuần Native TokenVector:** Tham khảo cơ chế của `haron/yt-dlp-transcript` nhưng **100% không dùng Python**, không phụ thuộc `yt-dlp.exe` hay FFmpeg. Tốc độ trích xuất tức thì (~1 giây)!
+- [x] **Nút Bấm Riêng "GET TRANSCRIPT" (Trích xuất Phụ đề & Lời thoại 1 Cú Click):**
+  - 🔘 **Thao tác độc lập:** Không cần vào menu chọn định dạng, chỉ cần dán URL và bấm nút **`[ GET TRANSCRIPT ]`** là tải ngay tức thì.
+  - 📝 **Tự động xuất đồng thời 2 tệp tin:**
+    - `[Tên_Video].srt`: Phụ đề tiêu chuẩn có timestamp chính xác từng mili-giây, tương thích mọi trình phát VLC, YouTube, CapCut, Premiere,...
+    - `[Tên_Video]_transcript.txt`: Toàn bộ lời thoại video nối liền dạng văn bản thuần (Full text), cực kỳ lý tưởng để đọc nhanh hoặc đưa vào các mô hình AI (ChatGPT, Claude, Gemini) tóm tắt bài giảng, podcast.
+  - ⚡ **Thuần Native TokenVector CIL:** Bắt tay trực tiếp với YouTube InnerTube API (Client Android) để bypass triệt để mã kiểm duyệt PO token (Proof-of-Origin) mà **100% không dùng Python**, không phụ thuộc `yt-dlp.exe` hay FFmpeg. Tốc độ trích xuất tức thì (~1 giây)!
+- [x] **Giao diện người dùng chuẩn hóa 100% tiếng Anh (Standardized Clean UI):**
+  - Loại bỏ hoàn toàn các lỗi font bảng mã ANSI/Unicode trên Windows Forms cũ.
+  - Bố cục 3 nút bấm lớn cân đối: **`[ DOWNLOAD ]`** | **`[ GET TRANSCRIPT ]`** | **`[ STOP ]`**.
+  - Ô nhập Video URL để trống mặc định, tiện lợi cho việc copy-paste link mới ngay khi mở ứng dụng.
 - [x] **Hỗ trợ đa định dạng Video & Audio:**
-  - 🎬 **Video:** `MP4 (480p Standard - Mặc định)`, `MP4 (720p HD)`, `MP4 (1080p Full HD)`, `MKV (1080p High Quality)`, `WebM (Chuẩn gốc YouTube)`.
-  - 🎵 **Audio:** `MP3 (320kbps)`, `M4A (AAC)`, `WAV (Lossless)`, `FLAC (Studio Lossless)`.
+  - 🎬 **Video:** `MP4 (480p Standard - Mặc định)`, `MP4 (720p HD)`, `MP4 (1080p Full HD)`, `MKV (1080p High Quality)`, `WebM (Original Quality)`.
+  - 🎵 **Audio:** `MP3 (Most Popular, 320kbps)`, `M4A (AAC High Quality)`, `WAV (Lossless Uncompressed)`, `FLAC (Lossless Studio Master)`.
   - 📜 **Phụ đề / Lời thoại:** `Subtitle: Transcript & SRT (.srt & .txt - YouTube Transcript)`.
 - [x] **Thanh tiến trình thông minh (Dynamic Adaptive ProgressBar):**
   - Tự động hiển thị chính xác % khi máy chủ trả về `Content-Length`.
