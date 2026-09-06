@@ -34,6 +34,7 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 | **Mức tiêu hao bộ nhớ RAM** | **~12 MB – 18 MB** | ~60 MB – 150 MB (Python VM + child processes) | Tiết kiệm tài nguyên máy tính tối đa |
 | **Thanh tiến trình (Progress)** | Tự thích ứng: % chính xác & dải sáng xanh động (`Marquee`) | Chỉ có text console dòng lệnh | Theo dõi trực quan, mượt mà |
 | **Hủy & Dọn dẹp an toàn (Stop)** | Nút **STOP** một chạm, tự động thu hồi luồng và dọn sạch `.part` | Nhấn `Ctrl+C` dễ để lại file rác dở dang | An toàn cho ổ đĩa, không lưu file hỏng |
+| **Trích xuất Transcript & Phụ đề** | **Tự động xuất cả `.srt` và `_transcript.txt` qua InnerTube (1 cú click)** | Cần script Python phụ (`yt-dlp-transcript`) + cài thư viện `srt` | Nhanh gọn, không cần Python, sẵn sàng nạp LLM AI |
 | **Khả năng đóng gói & phân phối** | Chạy file 16 KB trên Windows, Linux & macOS | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email/AirDrop tức thì |
 
 > 💡 **Tóm lại:** Nếu `yt-dlp` là một cỗ máy nặng nề đóng gói cả hệ sinh thái Python cồng kềnh phục vụ nghiên cứu phức tạp, thì **TokenVector Media Downloader** là một giải pháp tinh gọn, sắc bén và tối ưu hóa đến từng byte nhị phân: tải nhanh, dung lượng siêu nhẹ, giao diện đẹp và không phụ thuộc bất kỳ runtime nào.
@@ -53,9 +54,15 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 ## ✨ Tính năng nổi bật
 
 - [x] **Chuẩn mặc định 480p YouTube:** Tải nhanh, file nhẹ (~10 - 15 MB/video), đáp ứng hoàn hảo tiêu chuẩn phổ thông.
+- [x] **Trích xuất Transcript & Phụ đề YouTube (Subtitles & Full Transcript):**
+  - 📝 **Tự động sinh 2 định dạng song song:**
+    - `[Tên_Video].srt`: Phụ đề tiêu chuẩn có timestamp chính xác đến mili-giây, sẵn sàng import vào VLC, CapCut, Premiere,...
+    - `[Tên_Video]_transcript.txt`: Toàn bộ lời thoại video nối liền dạng văn bản thuần, tối ưu để đọc nhanh hoặc đưa vào các mô hình AI (ChatGPT, Claude, Gemini) để tóm tắt nội dung.
+  - ⚡ **Thuần Native TokenVector:** Tham khảo cơ chế của `haron/yt-dlp-transcript` nhưng **100% không dùng Python**, không phụ thuộc `yt-dlp.exe` hay FFmpeg. Tốc độ trích xuất tức thì (~1 giây)!
 - [x] **Hỗ trợ đa định dạng Video & Audio:**
   - 🎬 **Video:** `MP4 (480p Standard - Mặc định)`, `MP4 (720p HD)`, `MP4 (1080p Full HD)`, `MKV (1080p High Quality)`, `WebM (Chuẩn gốc YouTube)`.
   - 🎵 **Audio:** `MP3 (320kbps)`, `M4A (AAC)`, `WAV (Lossless)`, `FLAC (Studio Lossless)`.
+  - 📜 **Phụ đề / Lời thoại:** `Subtitle: Transcript & SRT (.srt & .txt - YouTube Transcript)`.
 - [x] **Thanh tiến trình thông minh (Dynamic Adaptive ProgressBar):**
   - Tự động hiển thị chính xác % khi máy chủ trả về `Content-Length`.
   - Chuyển đổi sang hiệu ứng dải sáng động (`ProgressBarStyle.Marquee`) khi tải dạng `Transfer-Encoding: chunked`, liên tục cập nhật dung lượng MB thực nhận.

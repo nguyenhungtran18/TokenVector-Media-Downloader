@@ -1,0 +1,7 @@
+# Compiler binaries
+tkvc.exe
+bin/
+*.part
+*.ytdl
+*.log
+*.tmp
