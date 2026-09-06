@@ -10,8 +10,5 @@ build.bat linguist-vendored=true
 build.sh linguist-vendored=true
 
 # 2. Khai báo nhận diện ngôn ngữ TokenVector (.tkv)
-# Giúp GitHub:
-# - Nhận biết toàn bộ tệp .tkv là mã nguồn chính (thay thế 100% thanh Languages)
-# - Kích hoạt bộ tô màu cú pháp (Syntax Highlighting) Pythonic hoàn hảo cho .tkv
 *.tkv linguist-detectable=true
-*.tkv linguist-language=Python
+*.tkv linguist-language=TokenVector
