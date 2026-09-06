@@ -1,3 +1,7 @@
+<p align="right">
+  <b>🇬🇧 English</b> | <a href="README.vi.md">🇻🇳 Tiếng Việt</a>
+</p>
+
 # ⚡ TokenVector Media Downloader
 <p align="center">
   <img src="https://img.shields.io/badge/Language-TokenVector%20(.tkv)-007ACC?style=for-the-badge&logo=codeforces&logoColor=white" alt="TokenVector" />
@@ -9,168 +13,170 @@
 
 ---
 
-## 🌟 Giới thiệu
+## 🌟 Overview
 
-**TokenVector Media Downloader** là ứng dụng tải video và audio đa nền tảng (**Windows, Linux, macOS**) với hiệu năng đột phá, được viết hoàn toàn bằng **ngôn ngữ lập trình [TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)**.
+**TokenVector Media Downloader** is a high-performance, cross-platform (**Windows, Linux, macOS**) media downloader written entirely in the **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** programming language.
 
-Khác với các ứng dụng tải media truyền thống cồng kềnh (thường nặng từ 30 MB – 150 MB do đóng gói kèm Python, Node.js hoặc Chromium), **TokenVector Downloader** tận dụng sức mạnh của trình biên dịch TokenVector Compiler (`tkvc`) biên dịch thẳng ra mã máy ảo Native Common Intermediate Language (CIL/MSIL) nhị phân. Kết quả mang lại:
+Unlike traditional media downloaders that are notoriously heavy (often 30 MB – 150 MB due to bundling Python runtimes, Node.js, or Chromium engines), **TokenVector Downloader** harnesses the power of the TokenVector Compiler (`tkvc`) to compile directly to native Common Intermediate Language (CIL/MSIL) bytecode. This delivers:
 
-- 🚀 **File thực thi siêu nhỏ gọn:** Toàn bộ ứng dụng đầy đủ tính năng chỉ vỏn vẹn **~22 KB**!
-- ⚡ **Tốc độ khởi động tức thì:** 0 giây delay, mức tiêu hao RAM cực thấp (< 15 MB khi tải).
-- 🛡️ **Zero Dependencies:** Hoạt động độc lập, tự động phân giải luồng và tải HTTP stream trực tiếp.
-- 🌐 **Đa nền tảng thực sự (Cross-Platform):** Chạy mượt mà trên **Windows** (Native PE), **Linux** (Ubuntu, Debian, Arch...) và **macOS** (Apple Silicon & Intel) cho cả chế độ Giao diện đồ họa (GUI) lẫn Dòng lệnh (CLI).
+- 🚀 **Ultra-lightweight binary:** Full-featured GUI application weighs only **~22 KB**!
+- ⚡ **Instant startup:** 0-second delay, minimal RAM footprint (< 15 MB under load).
+- 🛡️ **Zero Dependencies:** Fully standalone, direct native HTTP/HTTPS streaming and stream resolution.
+- 🌐 **True Cross-Platform:** Runs seamlessly on **Windows** (Native PE), **Linux** (Ubuntu, Debian, Arch...), and **macOS** (Apple Silicon & Intel) in both Graphical User Interface (GUI) and Command-Line Interface (CLI) modes.
 
 ---
 
-## ⚖️ Bảng So Sánh Chi Tiết: TokenVector Media Downloader vs. yt-dlp
+## ⚖️ Detailed Comparison: TokenVector Media Downloader vs. yt-dlp
 
-| Tiêu chí so sánh | ⚡ **TokenVector Media Downloader** | 🐢 **yt-dlp (Truyền thống)** | Ưu thế của TokenVector |
+| Feature / Metric | ⚡ **TokenVector Media Downloader** | 🐢 **yt-dlp (Traditional)** | The TokenVector Advantage |
 | :--- | :--- | :--- | :--- |
-| **Ngôn ngữ phát triển** | **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** | Python (C-Python runtime) | Thuần ngôn ngữ mới, kiến trúc tối ưu AOT CIL |
-| **Dung lượng file chạy (.exe)** | **~22 KB (22,016 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Gọn nhẹ gấp >1,000 lần** |
-| **Phụ thuộc bên thứ ba (Dependencies)** | **0 (Zero Dependency)** | Cần Python Runtime, FFmpeg (~80 MB) để merge audio/video | Chạy ngay độc lập, không cần bất kỳ công cụ ngoài |
-| **Giao diện người dùng (UI)** | **Đa nền tảng GUI (WinForms) & CLI** trực quan, gọn nhẹ | Chỉ có Command-Line (CLI), cần wrapper phức tạp | Trực quan, thân thiện trên cả Windows, Linux, macOS |
-| **Tốc độ khởi động** | **Tức thì (Instant < 50ms)** | 1.5s – 3.5s (do phải bung nén môi trường Python) | Nhanh hơn vượt trội, không độ trễ |
-| **Mức tiêu hao bộ nhớ RAM** | **~12 MB – 18 MB** | ~60 MB – 150 MB (Python VM + child processes) | Tiết kiệm tài nguyên máy tính tối đa |
-| **Thanh tiến trình (Progress)** | Tự thích ứng: % chính xác & dải sáng xanh động (`Marquee`) | Chỉ có text console dòng lệnh | Theo dõi trực quan, mượt mà |
-| **Hủy & Dọn dẹp an toàn (Stop)** | Nút **STOP** một chạm, tự động thu hồi luồng và dọn sạch `.part` | Nhấn `Ctrl+C` dễ để lại file rác dở dang | An toàn cho ổ đĩa, không lưu file hỏng |
-| **Trích xuất Transcript & Phụ đề** | **Nút bấm riêng `[ GET TRANSCRIPT ]` (tải đồng thời `.srt` & `_transcript.txt`)** | Cần script Python phụ (`yt-dlp-transcript`) + cài thư viện `srt` | 1 click tải tức thì, không cần Python, sẵn sàng nạp LLM AI |
-| **Khả năng đóng gói & phân phối** | Chạy file 22 KB trên Windows, Linux & macOS | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email/AirDrop tức thì |
+| **Programming Language** | **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** | Python (C-Python runtime) | Clean modern language, optimized native CIL architecture |
+| **Executable Size (.exe)** | **~22 KB (22,016 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Over 1,000x lighter** |
+| **Third-Party Dependencies** | **0 (Zero Dependency)** | Requires Python Runtime, FFmpeg (~80 MB) to merge audio/video | Runs out-of-the-box, no external utilities needed |
+| **User Interface (UI)** | **Cross-platform GUI (WinForms) & CLI** | Command-Line only (requires complex wrappers) | Intuitive, responsive UI across Windows, Linux & macOS |
+| **Startup Latency** | **Instant (< 50ms)** | 1.5s – 3.5s (due to unpacking Python environment) | Significantly faster, zero noticeable lag |
+| **RAM Footprint** | **~12 MB – 18 MB** | ~60 MB – 150 MB (Python VM + child processes) | Maximum system resource efficiency |
+| **Progress Indicator** | Adaptive: Exact % & animated pulsing glow (`Marquee`) | Plain console text output | Smooth visual tracking |
+| **Safe Stop & Cleanup** | One-touch **STOP** button, instantly releases threads & cleans `.part` files | Pressing `Ctrl+C` often leaves orphaned temp files | Safe for disk storage, never leaves corrupted files |
+| **Transcript & Subtitle Extraction** | **Dedicated `[ GET TRANSCRIPT ]` button (downloads both `.srt` & `_transcript.txt`)** | Requires extra Python script (`yt-dlp-transcript`) + `srt` lib | 1-click instant extraction, no Python, LLM AI ready |
+| **Packaging & Portability** | Single portable ~22 KB file for Windows, Linux & macOS | Requires multi-megabyte installers or Python/Pip setup | Instant distribution via Email, Chat, AirDrop |
 
-> 💡 **Tóm lại:** Nếu `yt-dlp` là một cỗ máy nặng nề đóng gói cả hệ sinh thái Python cồng kềnh phục vụ nghiên cứu phức tạp, thì **TokenVector Media Downloader** là một giải pháp tinh gọn, sắc bén và tối ưu hóa đến từng byte nhị phân: tải nhanh, dung lượng siêu nhẹ, giao diện đẹp và không phụ thuộc bất kỳ runtime nào.
-
----
-
-## 💎 Điểm cốt lõi: Sức mạnh của Ngôn ngữ TokenVector
-
-[**TokenVector**](https://github.com/nguyenhungtran18/TokenVector) là ngôn ngữ lập trình tiên tiến do **Trần Nguyên Hùng** nghiên cứu và phát triển, mang triết lý cú pháp thanh lịch, khả năng can thiệp trực tiếp vào tầng IL / Assembly và tối ưu hóa nhị phân ở mức tối đa:
-
-* **Tương tác trực tiếp với .NET CLR & Win32 API:** Khởi tạo các thành phần giao diện đồ họa `System.Windows.Forms`, điều khiển thread và luồng mạng HTTP/HTTPS với hiệu năng đỉnh cao.
-* **Bộ đệm thông minh High-Throughput:** Xử lý luồng tải mạng với buffer tối ưu 128 KB (`131072` bytes) giúp giảm thiểu context-switching và khai thác tối đa băng thông đường truyền.
-* **Cơ chế hủy an toàn (Instant Cancel & Clean):** Cho phép người dùng dừng tác vụ tải bất cứ lúc nào qua nút **STOP**, tự động thu hồi tài nguyên và dọn dẹp các tệp tạm dở dang (`.part`).
+> 💡 **Summary:** While `yt-dlp` is a heavyweight tool packing an entire Python ecosystem, **TokenVector Media Downloader** is an ultra-lean, laser-focused native utility: lightning fast, featherlight size, responsive GUI, and 100% dependency-free.
 
 ---
 
-## ✨ Tính năng nổi bật
+## 💎 Core Engine: The Power of TokenVector
 
-- [x] **Nút Bấm Riêng "GET TRANSCRIPT" (Trích xuất Phụ đề & Lời thoại 1 Cú Click):**
-  - 🔘 **Thao tác độc lập:** Không cần vào menu chọn định dạng, chỉ cần dán URL và bấm nút **`[ GET TRANSCRIPT ]`** là tải ngay tức thì.
-  - 📝 **Tự động xuất đồng thời 2 tệp tin:**
-    - `[Tên_Video].srt`: Phụ đề tiêu chuẩn có timestamp chính xác từng mili-giây, tương thích mọi trình phát VLC, YouTube, CapCut, Premiere,...
-    - `[Tên_Video]_transcript.txt`: Toàn bộ lời thoại video nối liền dạng văn bản thuần (Full text), cực kỳ lý tưởng để đọc nhanh hoặc đưa vào các mô hình AI (ChatGPT, Claude, Gemini) tóm tắt bài giảng, podcast.
-  - ⚡ **Thuần Native TokenVector CIL:** Bắt tay trực tiếp với YouTube InnerTube API (Client Android) để bypass triệt để mã kiểm duyệt PO token (Proof-of-Origin) mà **100% không dùng Python**, không phụ thuộc `yt-dlp.exe` hay FFmpeg. Tốc độ trích xuất tức thì (~1 giây)!
-- [x] **Giao diện người dùng chuẩn hóa 100% tiếng Anh (Standardized Clean UI):**
-  - Loại bỏ hoàn toàn các lỗi font bảng mã ANSI/Unicode trên Windows Forms cũ.
-  - Bố cục 3 nút bấm lớn cân đối: **`[ DOWNLOAD ]`** | **`[ GET TRANSCRIPT ]`** | **`[ STOP ]`**.
-  - Ô nhập Video URL để trống mặc định, tiện lợi cho việc copy-paste link mới ngay khi mở ứng dụng.
-- [x] **Hỗ trợ đa định dạng Video & Audio:**
-  - 🎬 **Video:** `MP4 (480p Standard - Mặc định)`, `MP4 (720p HD)`, `MP4 (1080p Full HD)`, `MKV (1080p High Quality)`, `WebM (Original Quality)`.
+[**TokenVector**](https://github.com/nguyenhungtran18/TokenVector) is an advanced programming language designed and developed by **Trần Nguyên Hùng**, featuring elegant syntax, direct CIL/Assembly interop, and extreme binary optimization:
+
+* **Direct .NET CLR & Win32 Interop:** Native instantiation of `System.Windows.Forms` components, asynchronous thread control, and high-performance network sockets.
+* **High-Throughput Smart Buffer:** Network streaming utilizing an optimal 128 KB (`131072` bytes) buffer to minimize CPU context-switching and saturate network bandwidth.
+* **Instant Cancel & Clean Safety Engine:** Allows users to halt active downloads instantly via the **STOP** button, properly releasing file locks and purging incomplete `.part` temporary files.
+
+---
+
+## ✨ Key Features
+
+- [x] **Dedicated "GET TRANSCRIPT" Button (1-Click Subtitles & Transcript Extraction):**
+  - 🔘 **Independent Operation:** No need to navigate dropdown menus—paste the URL and click **`[ GET TRANSCRIPT ]`** to download immediately.
+  - 📝 **Simultaneous Dual-Format Output:**
+    - `[Video_Title].srt`: Standard subtitle file with millisecond-accurate timestamps, ready for VLC, YouTube, CapCut, Premiere, etc.
+    - `[Video_Title]_transcript.txt`: Clean, continuous full-text transcript, ideal for quick reading or feeding into AI models (ChatGPT, Claude, Gemini) for summaries.
+  - ⚡ **100% Native TokenVector CIL:** Directly negotiates with YouTube InnerTube API (Android Client) to bypass PO token restrictions without Python, `yt-dlp.exe`, or FFmpeg. Extracts in ~1 second!
+- [x] **Standardized Clean English UI:**
+  - Completely avoids legacy ANSI/Unicode code-page rendering issues on Windows Forms.
+  - Symmetrical 3-button layout: **`[ DOWNLOAD ]`** | **`[ GET TRANSCRIPT ]`** | **`[ STOP ]`**.
+  - Empty default Video URL input for quick and clean paste upon launching.
+- [x] **Comprehensive Video & Audio Format Support:**
+  - 🎬 **Video:** `MP4 (480p Standard - Default)`, `MP4 (720p HD)`, `MP4 (1080p Full HD)`, `MKV (1080p High Quality)`, `WebM (Original Quality)`.
   - 🎵 **Audio:** `MP3 (Most Popular, 320kbps)`, `M4A (AAC High Quality)`, `WAV (Lossless Uncompressed)`, `FLAC (Lossless Studio Master)`.
-  - 📜 **Phụ đề / Lời thoại:** `Subtitle: Transcript & SRT (.srt & .txt - YouTube Transcript)`.
-- [x] **Thanh tiến trình thông minh (Dynamic Adaptive ProgressBar):**
-  - Tự động hiển thị chính xác % khi máy chủ trả về `Content-Length`.
-  - Chuyển đổi sang hiệu ứng dải sáng động (`ProgressBarStyle.Marquee`) khi tải dạng `Transfer-Encoding: chunked`, liên tục cập nhật dung lượng MB thực nhận.
-- [x] **Tùy chọn thư mục lưu trữ:** Cho phép chọn nhanh thư mục lưu tệp tải qua hộp thoại Browse folder trực quan.
-- [x] **Tích hợp cả phiên bản CLI và GUI:**
-  - `tv-downloader-gui.exe`: Ứng dụng đồ họa người dùng.
-  - `tv-downloader-cli.exe`: Dành cho lập trình viên chạy lệnh terminal hoặc tích hợp kịch bản tự động.
+  - 📜 **Subtitles / Transcript:** `Subtitle: Transcript & SRT (.srt & .txt - YouTube Transcript)`.
+- [x] **Dynamic Adaptive ProgressBar:**
+  - Automatically displays exact percentage when the server provides `Content-Length`.
+  - Seamlessly switches to pulsing marquee animation (`ProgressBarStyle.Marquee`) for `Transfer-Encoding: chunked` streams, reporting real-time received megabytes.
+- [x] **Custom Output Directory Selection:** Browse folder dialog to pick any save destination.
+- [x] **Both GUI and CLI Editions Included:**
+  - `tv-downloader-gui.exe`: Modern graphical user application (~22 KB).
+  - `tv-downloader-cli.exe`: Terminal utility for scripting and automated workflows (~16 KB).
 
 ---
 
-## 📦 Bộ cài đặt & Cấu trúc
-
-Toàn bộ dự án và ứng dụng đóng gói sẵn:
+## 📦 Project Layout & Structure
 
 ```text
 TokenVector-Media-Downloader/
-├── .github/workflows/        # CI/CD Matrix tự động kiểm thử (Ubuntu, macOS, Windows)
-├── src/                      # Mã nguồn TokenVector Native (.tkv)
-│   ├── gui_runner.tkv        # Điểm vào chính ứng dụng GUI (Entry: run)
-│   ├── cli_runner.tkv        # Điểm vào chính ứng dụng CLI (Entry: main)
-│   └── core_engine.tkv       # Động cơ điều phối phiên tải, mạng & POSIX Bridge
-├── il_features/              # Các module tính năng IL Compiler & GUI WinForms
-│   ├── win32_gui_window.tkv  # Giao diện WinForms Native & bộ giải mã luồng
-│   └── ...                   # Toàn bộ module thư viện TokenVector IL
-├── tv-downloader-gui.exe     # Bản thực thi đồ họa GUI (~16 KB, chạy trên Win/Linux/macOS)
-├── tv-downloader-cli.exe     # Bản thực thi dòng lệnh CLI (~16 KB, chạy trên Win/Linux/macOS)
-├── build.bat                 # Script tự động build trên Windows
-├── build.sh                  # Script tự động build trên Linux & macOS
-├── HUONG_DAN.txt             # Tài liệu hướng dẫn sử dụng nhanh
-├── LICENSE                   # Giấy phép MIT
-└── README.md                 # Giới thiệu & hướng dẫn kỹ thuật
+├── .github/workflows/        # Automated CI/CD Matrix (Ubuntu, macOS, Windows)
+├── src/                      # Native TokenVector source code (.tkv)
+│   ├── gui_runner.tkv        # GUI application entrypoint (Entry: run)
+│   ├── cli_runner.tkv        # CLI application entrypoint (Entry: main)
+│   └── core_engine.tkv       # Download orchestration, network stream & POSIX bridge
+├── il_features/              # CIL compiler features & WinForms UI modules
+│   ├── win32_gui_window.tkv  # Native WinForms UI & stream decoding logic
+│   └── ...                   # TokenVector IL library modules
+├── tv-downloader-gui.exe     # Compiled GUI executable (~22 KB, runs on Win/Linux/macOS)
+├── tv-downloader-cli.exe     # Compiled CLI executable (~16 KB, runs on Win/Linux/macOS)
+├── build.bat                 # Windows automated build script
+├── build.sh                  # Linux & macOS automated build script
+├── HUONG_DAN.txt             # Quick user manual
+├── LICENSE                   # MIT License
+├── README.md                 # English documentation (this file)
+└── README.vi.md              # Vietnamese documentation (Tài liệu tiếng Việt)
 ```
 
-### Cách khởi chạy ứng dụng:
+### Running the Application:
 
-- **Trên Windows:**
-  - **Khởi chạy GUI:** Click đúp chuột trực tiếp vào file `tv-downloader-gui.exe`.
-  - **Khởi chạy CLI:** Mở Command Prompt / PowerShell: `.\tv-downloader-cli.exe <link_youtube>`.
-- **Trên Linux:**
+- **On Windows:**
+  - **Launch GUI:** Double-click `tv-downloader-gui.exe`.
+  - **Launch CLI:** Open Command Prompt / PowerShell: `.\tv-downloader-cli.exe <youtube_url>`.
+- **On Linux:**
   - **GUI:** `mono tv-downloader-gui.exe`
-  - **CLI:** `mono tv-downloader-cli.exe <link_youtube>`
-- **Trên macOS:**
+  - **CLI:** `mono tv-downloader-cli.exe <youtube_url>`
+- **On macOS:**
   - **GUI:** `mono tv-downloader-gui.exe`
-  - **CLI:** `mono tv-downloader-cli.exe <link_youtube>`
+  - **CLI:** `mono tv-downloader-cli.exe <youtube_url>`
 
 ---
 
-## 🛠️ Hướng dẫn Tự Biên Dịch từ Mã Nguồn (.tkv)
+## 🛠️ Building from Source (.tkv)
 
-Bạn có thể tự biên dịch các file mã nguồn `.tkv` thành file nhị phân thực thi `.exe` bằng trình biên dịch **TokenVector Compiler (`tkvc.exe`)** từ dự án [TokenVector](https://github.com/nguyenhungtran18/TokenVector):
+You can compile the `.tkv` source code into native executables using the **TokenVector Compiler (`tkvc.exe`)** from the [TokenVector](https://github.com/nguyenhungtran18/TokenVector) project:
 
-### 1. Biên dịch Ứng dụng GUI:
+### 1. Compile GUI Application:
 ```powershell
-# Từ thư mục gốc dự án:
+# From the project root:
 tkvc.exe build src\gui_runner.tkv --entry run --out tv-downloader-gui.exe
 ```
 
-### 2. Biên dịch Ứng dụng Dòng lệnh (CLI):
+### 2. Compile CLI Application:
 ```powershell
 tkvc.exe build src\cli_runner.tkv --entry main --out tv-downloader-cli.exe
 ```
-### 3. Chạy trên Linux & macOS:
-Ứng dụng được biên dịch theo chuẩn **.NET CIL nhị phân**, hỗ trợ chạy cả giao diện đồ họa **GUI (Windows Forms)** và dòng lệnh **CLI** trên Linux và macOS thông qua Mono runtime:
 
-#### A. Trên Linux (Ubuntu / Debian / Linux Mint):
+### 3. Running on Linux & macOS:
+The compiled binaries target **.NET CIL bytecode**, enabling full support for both **GUI (Windows Forms)** and **CLI** on Linux and macOS via the Mono runtime:
+
+#### A. On Linux (Ubuntu / Debian / Linux Mint):
 ```bash
-# 1. Cài đặt Mono runtime và thư viện đồ họa GDI+ / WinForms:
+# 1. Install Mono runtime and GDI+ / WinForms libraries:
 sudo apt-get update
 sudo apt-get install -y mono-runtime mono-devel libgdiplus mono-winforms
 
-# 2. Khởi chạy ứng dụng đồ họa (GUI Form):
+# 2. Launch GUI:
 mono tv-downloader-gui.exe
 
-# 3. Khởi chạy ứng dụng dòng lệnh (CLI):
-mono tv-downloader-cli.exe <link_youtube>
+# 3. Launch CLI:
+mono tv-downloader-cli.exe <youtube_url>
 ```
 
-#### B. Trên macOS:
+#### B. On macOS:
 ```bash
-# 1. Cài đặt Mono trọn bộ và X11 Server (XQuartz để vẽ giao diện Form):
+# 1. Install Mono MDK and XQuartz (X11 server for WinForms rendering):
 brew install --cask xquartz mono-mdk
 
-# 2. Khởi chạy ứng dụng đồ họa (GUI Form):
+# 2. Launch GUI:
 mono tv-downloader-gui.exe
 
-# 3. Khởi chạy ứng dụng dòng lệnh (CLI):
-mono tv-downloader-cli.exe <link_youtube>
+# 3. Launch CLI:
+mono tv-downloader-cli.exe <youtube_url>
 ```
-
-## 📄 Bản quyền & Giấy phép (License)
-
-Dự án được phân phối dưới giấy phép **[MIT License](LICENSE)**. Bạn hoàn toàn tự do sử dụng, sửa đổi và đóng góp phát triển.
 
 ---
 
-## 👨‍💻 Tác giả & Liên hệ
+## 📄 License
 
-* **Tác giả:** Trần Nguyên Hùng
+This project is licensed under the **[MIT License](LICENSE)**. Feel free to use, modify, and distribute.
+
+---
+
+## 👨‍💻 Author & Contact
+
+* **Author:** Trần Nguyên Hùng
 * **Email:** [nguyen.hung.tran.18@gmail.com](mailto:nguyen.hung.tran.18@gmail.com)
-* **Dự án Ngôn ngữ TokenVector:** [https://github.com/nguyenhungtran18/TokenVector](https://github.com/nguyenhungtran18/TokenVector)
-* **Mã nguồn Downloader:** [https://github.com/nguyenhungtran18/TokenVector-Downloader](https://github.com/nguyenhungtran18/TokenVector-Downloader)
+* **TokenVector Language Project:** [https://github.com/nguyenhungtran18/TokenVector](https://github.com/nguyenhungtran18/TokenVector)
+* **Downloader Repository:** [https://github.com/nguyenhungtran18/TokenVector-Downloader](https://github.com/nguyenhungtran18/TokenVector-Downloader)
 
 ---
 
 <p align="center">
-  <i>Được xây dựng với niềm tự hào công nghệ bằng ngôn ngữ lập trình <b>TokenVector</b>.</i>
+  <i>Engineered with passion using the <b>TokenVector</b> programming language.</i>
 </p>
