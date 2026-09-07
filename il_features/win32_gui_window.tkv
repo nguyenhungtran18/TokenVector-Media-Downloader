@@ -842,7 +842,8 @@ def ensure_downloader_class(ctx):
         '    ldstr "Select Destination Download Folder"',
         '    callvirt instance void [System.Windows.Forms]System.Windows.Forms.FolderBrowserDialog::set_Description(string)',
         '    ldloc.0',
-        '    callvirt instance valuetype [System.Windows.Forms]System.Windows.Forms.DialogResult [System.Windows.Forms]System.Windows.Forms.CommonDialog::ShowDialog()',
+        '    ldarg.0',
+        '    callvirt instance valuetype [System.Windows.Forms]System.Windows.Forms.DialogResult [System.Windows.Forms]System.Windows.Forms.CommonDialog::ShowDialog(class [System.Windows.Forms]System.Windows.Forms.IWin32Window)',
         '    stloc.1',
         '    ldloc.1',
         '    ldc.i4.1',
@@ -853,6 +854,8 @@ def ensure_downloader_class(ctx):
         '    callvirt instance string [System.Windows.Forms]System.Windows.Forms.FolderBrowserDialog::get_SelectedPath()',
         '    callvirt instance void [System.Windows.Forms]System.Windows.Forms.Control::set_Text(string)',
         '  SKIP_BROWSE:',
+        '    ldloc.0',
+        '    callvirt instance void [System]System.ComponentModel.Component::Dispose()',
         '    ret',
         '  }',
         '',
@@ -1769,7 +1772,7 @@ def ensure_downloader_class(ctx):
         '    bgt CHOOSE_BEST',
         '',
         '    ldloc.0',
-        '    ldstr "<iframe[^>]+src=[\'\\"]([^\'\\"]+)[\'\\"]"',
+        '    ldstr "(?:<iframe[^>]+src=|data-source=|data-src=)[\'\\"]([^\'\\"]+)[\'\\"]"',
         '    call class [System]System.Text.RegularExpressions.MatchCollection [System]System.Text.RegularExpressions.Regex::Matches(string, string)',
         '    stloc.2',
         '',
@@ -3101,7 +3104,7 @@ def ensure_downloader_class(ctx):
         '',
         '    ldloc.s 27',
         '    call bool [mscorlib]System.String::IsNullOrEmpty(string)',
-        '    brtrue NOT_HLS',
+        '    brtrue SNIFF_NOT_FOUND',
         '',
         '    // Found main stream! Switch to HLS download',
         '    ldloc.s 27',
@@ -3114,6 +3117,20 @@ def ensure_downloader_class(ctx):
         '    callvirt instance void DownloaderForm::DownloadHlsStream(string, string)',
         '    ret',
         '',
+                '  SNIFF_NOT_FOUND:',
+        '    ldarg.0',
+        '    ldfld class [System.Windows.Forms]System.Windows.Forms.Label DownloaderForm::lblStatus',
+        '    ldstr "Protected dynamic player detected. Please paste direct .m3u8 link."',
+        '    callvirt instance void [System.Windows.Forms]System.Windows.Forms.Control::set_Text(string)',
+        '',
+        '    ldstr "This webpage protects its media stream with dynamic client-side JavaScript (e.g. AJAX / token authentication).\\n\\nTo download this video:\\n1. Open the video in your browser and press F12 (Network tab).\\n2. Filter by \'m3u8\' and play the video.\\n3. Copy the .m3u8 URL and paste it into this app to download directly!"',
+        '    ldstr "Protected Stream Detected"',
+        '    ldc.i4.0',
+        '    ldc.i4.s 48',
+        '    call valuetype [System.Windows.Forms]System.Windows.Forms.DialogResult [System.Windows.Forms]System.Windows.Forms.MessageBox::Show(string, string, valuetype [System.Windows.Forms]System.Windows.Forms.MessageBoxButtons, valuetype [System.Windows.Forms]System.Windows.Forms.MessageBoxIcon)',
+        '    pop',
+        '    ret',
+
         '  NOT_HLS:',
         '',
         '    // Reset cancel flag & set destination folder',
@@ -3820,22 +3837,48 @@ def ensure_downloader_class(ctx):
         '  RET_FAIL_EXIT:',
         '    ret',
         '  }',
+        '',
+        '  .method public static hidebysig void StartGui() cil managed',
+        '  {',
+        '    .maxstack 2',
+        '    .locals init (',
+        '      [0] class [mscorlib]System.Threading.Thread V_th',
+        '    )',
+        '    ldnull',
+        '    ldftn void DownloaderForm::RunGuiInternal()',
+        '    newobj instance void [mscorlib]System.Threading.ThreadStart::.ctor(object, native int)',
+        '    newobj instance void [mscorlib]System.Threading.Thread::.ctor(class [mscorlib]System.Threading.ThreadStart)',
+        '    stloc.0',
+        '    ldloc.0',
+        '    ldc.i4.0',
+        '    callvirt instance void [mscorlib]System.Threading.Thread::SetApartmentState(valuetype [mscorlib]System.Threading.ApartmentState)',
+        '    ldloc.0',
+        '    callvirt instance void [mscorlib]System.Threading.Thread::Start()',
+        '    ldloc.0',
+        '    callvirt instance void [mscorlib]System.Threading.Thread::Join()',
+        '    ret',
+        '  }',
+        '',
+        '  .method public static hidebysig void RunGuiInternal() cil managed',
+        '  {',
+        '    .maxstack 2',
+        '    call void [System.Windows.Forms]System.Windows.Forms.Application::EnableVisualStyles()',
+        '    ldc.i4.0',
+        '    call void [System.Windows.Forms]System.Windows.Forms.Application::SetCompatibleTextRenderingDefault(bool)',
+        '    newobj instance void DownloaderForm::.ctor()',
+        '    call void [System.Windows.Forms]System.Windows.Forms.Application::Run(class [System.Windows.Forms]System.Windows.Forms.Form)',
+        '    ret',
+        '  }',
         '}',
     ])
 
 
 def _push_launch_downloader_gui(args, scope, out, dtype, ctx):
     ensure_downloader_class(ctx)
-    if len(args) == 2:
-        ctx['compile_expr'](args[0], scope, out, 'str', ctx)
-        ctx['compile_expr'](args[1], scope, out, 'str', ctx)
-        out.append('    newobj instance void DownloaderForm::.ctor(string, string)')
-    elif len(args) == 0:
-        out.append('    newobj instance void DownloaderForm::.ctor()')
-    else:
-        raise SyntaxError("il_codegen: launch_downloader_gui() nhan 0 hoac 2 tham so (url, folder)")
+    if len(args) != 0:
+        raise SyntaxError("il_codegen: launch_downloader_gui() nhan 0 tham so")
 
-    out.append('    call void [System.Windows.Forms]System.Windows.Forms.Application::Run(class [System.Windows.Forms]System.Windows.Forms.Form)')
+    out.append('    call void DownloaderForm::StartGui()')
     out.append('    ldc.i4.0')
 
 
@@ -3856,8 +3899,7 @@ def fpw_win_gui(stmt, ctx):
 
 def codegen_win_gui(stmt, scope, body, body_dtype, ctx, sig, codegen_stmts_fn):
     ensure_downloader_class(ctx)
-    body.append('    newobj instance void DownloaderForm::.ctor()')
-    body.append('    call void [System.Windows.Forms]System.Windows.Forms.Application::Run(class [System.Windows.Forms]System.Windows.Forms.Form)')
+    body.append('    call void DownloaderForm::StartGui()')
     body.append('    ldc.i4.1')
     ctx['store_var'](stmt['name'], scope, body)
 
