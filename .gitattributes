@@ -9,6 +9,6 @@ CHAY_THU_*.bat linguist-vendored=true
 build.bat linguist-vendored=true
 build.sh linguist-vendored=true
 
-# 2. Khai báo nhận diện ngôn ngữ TokenVector (.tkv)
+# 2. Khai báo nhận diện ngôn ngữ & Tô màu cú pháp cho TokenVector (.tkv)
 *.tkv linguist-detectable=true
-*.tkv linguist-language=TokenVector
+*.tkv linguist-language=Python
