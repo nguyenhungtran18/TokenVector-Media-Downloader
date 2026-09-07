@@ -19,7 +19,7 @@
 
 Unlike traditional media downloaders that are notoriously heavy (often 30 MB – 150 MB due to bundling Python runtimes, Node.js, or Chromium engines), **TokenVector Downloader** harnesses the power of the TokenVector Compiler (`tkvc`) to compile directly to native Common Intermediate Language (CIL/MSIL) bytecode. This delivers:
 
-- 🚀 **Ultra-lightweight binary:** Full-featured GUI application weighs only **~25 KB**!
+- 🚀 **Ultra-lightweight binary:** Full-featured GUI application weighs only **~28 KB**!
 - ⚡ **Instant startup:** 0-second delay, minimal RAM footprint (< 15 MB under load).
 - 🛡️ **Zero Dependencies:** Fully standalone, direct native HTTP/HTTPS streaming, HLS parsing, and stream resolution.
 - 🌐 **True Cross-Platform:** Runs seamlessly on **Windows** (Native PE), **Linux** (Ubuntu, Debian, Arch...), and **macOS** (Apple Silicon & Intel) in both Graphical User Interface (GUI) and Command-Line Interface (CLI) modes.
@@ -31,16 +31,16 @@ Unlike traditional media downloaders that are notoriously heavy (often 30 MB –
 | Feature / Metric | ⚡ **TokenVector Media Downloader** | 🐢 **yt-dlp (Traditional)** | The TokenVector Advantage |
 | :--- | :--- | :--- | :--- |
 | **Programming Language** | **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** | Python (C-Python runtime) | Clean modern language, optimized native CIL architecture |
-| **Executable Size (.exe)** | **~25 KB (25,600 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Over 1,000x lighter** |
+| **Executable Size (.exe)** | **~28 KB (28,160 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Over 1,000x lighter** |
 | **Third-Party Dependencies** | **0 (Zero Dependency)** | Requires Python Runtime, FFmpeg (~80 MB) to merge audio/video | Runs out-of-the-box, no external utilities needed |
 | **User Interface (UI)** | **Cross-platform GUI (WinForms) & CLI** | Command-Line only (requires complex wrappers) | Intuitive, responsive UI across Windows, Linux & macOS |
 | **Startup Latency** | **Instant (< 50ms)** | 1.5s – 3.5s (due to unpacking Python environment) | Significantly faster, zero noticeable lag |
 | **RAM Footprint** | **~12 MB – 18 MB** | ~60 MB – 150 MB (Python VM + child processes) | Maximum system resource efficiency |
 | **Progress Indicator** | Adaptive: Exact % & animated pulsing glow (`Marquee`) | Plain console text output | Smooth visual tracking |
 | **Safe Stop & Cleanup** | One-touch **STOP** button, instantly releases threads & cleans `.part` files | Pressing `Ctrl+C` often leaves orphaned temp files | Safe for disk storage, never leaves corrupted files |
-| **HLS Stream (.m3u8) Support** | **Built-in Native CIL HLS Parser, Auto-Sniffer & 3-Layer Anti-Ad Filter** | Relies on external FFmpeg binary | Auto-sniffs .m3u8 from web pages, filters out 5s/15s ads, merges into MP4 |
+| **HLS Stream (.m3u8) Support** | **Built-in Native CIL HLS Parser & 3-Layer Anti-Ad Filter** | Relies on external FFmpeg binary | Direct .m3u8 & web embed extractor, filters out 5s/15s ads, merges into MP4 without FFmpeg |
 | **Transcript & Subtitle Extraction** | **Dedicated `[ GET TRANSCRIPT ]` button (downloads both `.srt` & `_transcript.txt`)** | Requires extra Python script (`yt-dlp-transcript`) + `srt` lib | 1-click instant extraction, no Python, LLM AI ready |
-| **Packaging & Portability** | Single portable ~25 KB file for Windows, Linux & macOS | Requires multi-megabyte installers or Python/Pip setup | Instant distribution via Email, Chat, AirDrop |
+| **Packaging & Portability** | Single portable ~28 KB file for Windows, Linux & macOS | Requires multi-megabyte installers or Python/Pip setup | Instant distribution via Email, Chat, AirDrop |
 
 > 💡 **Summary:** While `yt-dlp` is a heavyweight tool packing an entire Python ecosystem, **TokenVector Media Downloader** is an ultra-lean, laser-focused native utility: lightning fast, featherlight size, responsive GUI, and 100% dependency-free.
 
@@ -75,13 +75,15 @@ Unlike traditional media downloaders that are notoriously heavy (often 30 MB –
 - [x] **Dynamic Adaptive ProgressBar:**
   - Automatically displays exact percentage when the server provides `Content-Length`.
   - Seamlessly switches to pulsing marquee animation (`ProgressBarStyle.Marquee`) for `Transfer-Encoding: chunked` streams, reporting real-time received megabytes.
-- [x] **Custom Output Directory Selection:** Browse folder dialog to pick any save destination.
+- [x] **Custom Output Directory Selection & STA Threading Architecture:**
+  - Fast, responsive folder picker (`Browse...`) powered by Single-Threaded Apartment (STA) thread model.
+  - Passes native window handle owner and cleans up COM dialog handles properly, completely preventing GUI freezing or `(Not Responding)` states.
 - [x] **Native HLS Stream Downloader (.m3u8 Direct Extraction):**
-  - 🎬 **Automatic M3U8 Detection:** Simply paste any HLS playlist URL (`.m3u8`) and click **`[ DOWNLOAD ]`**. The engine automatically detects the playlist, resolves Master/Media variants, downloads `.ts` segments, and merges them into a clean `.mp4` file.
+  - 🎬 **Automatic M3U8 Detection:** Simply paste any direct HLS playlist URL (`.m3u8`) or supported web player page and click **`[ DOWNLOAD ]`**. The engine detects the playlist, resolves variants, downloads `.ts` segments, and merges them into a clean `.mp4` file.
   - ⚡ **Zero-Dependency Merging:** 100% native CIL binary streaming and packet stitching without needing FFmpeg or external tools.
   - 📊 **Segment Progress & Instant Stop:** Real-time segment progress counter (`X/Y segments - %`) with one-click **STOP** to halt and clean temporary files immediately.
 - [x] **Both GUI and CLI Editions Included:**
-  - `tv-downloader-gui.exe`: Modern graphical user application (~25 KB).
+  - `tv-downloader-gui.exe`: Modern graphical user application (~28 KB).
   - `tv-downloader-cli.exe`: Terminal utility for scripting and automated workflows (~16 KB).
 
 ---
@@ -98,7 +100,7 @@ TokenVector-Media-Downloader/
 ├── il_features/              # CIL compiler features & WinForms UI modules
 │   ├── win32_gui_window.tkv  # Native WinForms UI & stream decoding logic
 │   └── ...                   # TokenVector IL library modules
-├── tv-downloader-gui.exe     # Compiled GUI executable (~25 KB, runs on Win/Linux/macOS)
+├── tv-downloader-gui.exe     # Compiled GUI executable (~28 KB, runs on Win/Linux/macOS)
 ├── tv-downloader-cli.exe     # Compiled CLI executable (~16 KB, runs on Win/Linux/macOS)
 ├── build.bat                 # Windows automated build script
 ├── build.sh                  # Linux & macOS automated build script
@@ -178,7 +180,7 @@ This project is licensed under the **[MIT License](LICENSE)**. Feel free to use,
 * **Author:** Trần Nguyên Hùng
 * **Email:** [nguyen.hung.tran.18@gmail.com](mailto:nguyen.hung.tran.18@gmail.com)
 * **TokenVector Language Project:** [https://github.com/nguyenhungtran18/TokenVector](https://github.com/nguyenhungtran18/TokenVector)
-* **Downloader Repository:** [https://github.com/nguyenhungtran18/TokenVector-Downloader](https://github.com/nguyenhungtran18/TokenVector-Downloader)
+* **Downloader Repository:** [https://github.com/nguyenhungtran18/TokenVector-Media-Downloader](https://github.com/nguyenhungtran18/TokenVector-Media-Downloader)
 
 ---
 
