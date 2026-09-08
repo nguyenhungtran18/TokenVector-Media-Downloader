@@ -23,7 +23,6 @@ It helps the project gain visibility and motivates further development of the To
 </div>
 
 ---
----
 
 ## 🌟 Overview
 
