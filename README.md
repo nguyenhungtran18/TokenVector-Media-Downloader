@@ -1,10 +1,11 @@
 <p align="right">
   <b>🇬🇧 English</b> | <a href="README.vi.md">🇻🇳 Tiếng Việt</a>
 </p>
+---
 <div align="center">
 ⚡ TokenVector Media Downloader
 </div>
-
+---
   <p align="center">
   <img src="https://img.shields.io/badge/Language-TokenVector%20(.tkv)-007ACC?style=for-the-badge&logo=codeforces&logoColor=white" alt="TokenVector" />
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-success?style=for-the-badge" alt="Cross Platform" />
