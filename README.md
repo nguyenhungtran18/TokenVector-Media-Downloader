@@ -5,7 +5,7 @@
 ---
 
 <p align="center">
-##⚡ TokenVector Media Downloader
+## ⚡ TokenVector Media Downloader
 <p>
   
 ---
