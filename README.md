@@ -10,6 +10,7 @@
   <img src="https://img.shields.io/badge/Binary%20Size-~25%20KB-blue?style=for-the-badge" alt="Binary Size" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
 </p>
+
 ---
 
 <div align="center">
