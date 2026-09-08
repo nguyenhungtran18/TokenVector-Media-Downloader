@@ -10,6 +10,17 @@
   <img src="https://img.shields.io/badge/Binary%20Size-~25%20KB-blue?style=for-the-badge" alt="Binary Size" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
 </p>
+---
+
+<div align="center">
+
+### ⭐️ Ủng hộ dự án
+Nếu **TokenVector Media Downloader** giúp ích cho công việc của bạn, hãy bấm **Star ⭐️** góc trên bên phải để ủng hộ tác giả!  
+Sự ủng hộ của bạn là động lực lớn để tiếp tục tối ưu và phát triển hệ sinh thái TokenVector.
+
+[![GitHub stars](https://img.shields.io/github/stars/nguyenhungtran18/TokenVector-Media-Downloader?style=social)](https://github.com/nguyenhungtran18/TokenVector-Media-Downloader/stargazers)
+
+</div>
 
 ---
 
