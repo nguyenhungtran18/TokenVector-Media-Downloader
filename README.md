@@ -3,7 +3,7 @@
 </p>
 ---
 <div align="center">
-⚡ TokenVector Media Downloader
+##⚡ TokenVector Media Downloader
 </div>
 ---
   <p align="center">
