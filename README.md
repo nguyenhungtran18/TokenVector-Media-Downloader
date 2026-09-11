@@ -2,29 +2,14 @@
   <b>🇬🇧 English</b> | <a href="README.vi.md">🇻🇳 Tiếng Việt</a>
 </p>
 
----
-
-
-## ⚡ TokenVector Media Downloader
-<p align="left">   
+# ⚡ TokenVector Media Downloader
+<p align="center">
   <img src="https://img.shields.io/badge/Language-TokenVector%20(.tkv)-007ACC?style=for-the-badge&logo=codeforces&logoColor=white" alt="TokenVector" />
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-success?style=for-the-badge" alt="Cross Platform" />
   <img src="https://img.shields.io/badge/CI%20Matrix-Ubuntu%20%7C%20macOS%20%7C%20Windows%20Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI Passing" />
   <img src="https://img.shields.io/badge/Binary%20Size-~25%20KB-blue?style=for-the-badge" alt="Binary Size" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
 </p>
-
----
-
-<div align="center">
-
-### ⭐️ Support the Project
-If **TokenVector Media Downloader** saved your time, bandwidth, or helped your workflow, please consider giving it a **Star** on GitHub!  
-It helps the project gain visibility and motivates further development of the TokenVector ecosystem.
-
-[![GitHub stars](https://img.shields.io/github/stars/nguyenhungtran18/TokenVector-Media-Downloader?style=social)](https://github.com/nguyenhungtran18/TokenVector-Media-Downloader/stargazers)
-
-</div>
 
 ---
 
@@ -97,6 +82,12 @@ Unlike traditional media downloaders that are notoriously heavy (often 30 MB –
   - 🎬 **Automatic M3U8 Detection:** Simply paste any direct HLS playlist URL (`.m3u8`) or supported web player page and click **`[ DOWNLOAD ]`**. The engine detects the playlist, resolves variants, downloads `.ts` segments, and merges them into a clean `.mp4` file.
   - ⚡ **Zero-Dependency Merging:** 100% native CIL binary streaming and packet stitching without needing FFmpeg or external tools.
   - 📊 **Segment Progress & Instant Stop:** Real-time segment progress counter (`X/Y segments - %`) with one-click **STOP** to halt and clean temporary files immediately.
+- [x] **Facebook Videos & Reels Downloader:**
+  - 🔵 Paste any public Facebook video, Reel or `fb.watch` link and click **`[ DOWNLOAD ]`** — no login, no cookies, no yt-dlp/FFmpeg needed.
+  - 🔗 Bare links work too: `facebook.com/...` or `fb.watch/...` pasted without `https://` are completed automatically.
+  - 🛡️ If a resolved link turns out to be an expired placeholder page instead of video bytes, it is deleted automatically and reported clearly instead of leaving a fake `.mp4` behind.
+- [x] **TikTok Videos Downloader:**
+  - 🎵 Paste a TikTok video link (`tiktok.com/@user/video/...`) and click **`[ DOWNLOAD ]`** — the app resolves the direct MP4 and saves it under the video title.
 - [x] **Both GUI and CLI Editions Included:**
   - `tv-downloader-gui.exe`: Modern graphical user application (~28 KB).
   - `tv-downloader-cli.exe`: Terminal utility for scripting and automated workflows (~16 KB).

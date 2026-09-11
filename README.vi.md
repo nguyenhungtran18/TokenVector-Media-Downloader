@@ -10,17 +10,6 @@
   <img src="https://img.shields.io/badge/Binary%20Size-~25%20KB-blue?style=for-the-badge" alt="Binary Size" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
 </p>
----
-
-<div align="center">
-
-### ⭐️ Ủng hộ dự án
-Nếu **TokenVector Media Downloader** giúp ích cho công việc của bạn, hãy bấm **Star ⭐️** góc trên bên phải để ủng hộ tác giả!  
-Sự ủng hộ của bạn là động lực lớn để tiếp tục tối ưu và phát triển hệ sinh thái TokenVector.
-
-[![GitHub stars](https://img.shields.io/github/stars/nguyenhungtran18/TokenVector-Media-Downloader?style=social)](https://github.com/nguyenhungtran18/TokenVector-Media-Downloader/stargazers)
-
-</div>
 
 ---
 
@@ -93,6 +82,12 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
   - 🎬 **Tự động nhận diện Playlist M3U8:** Chỉ cần dán bất kỳ link `.m3u8` nào (hoặc link trang web phát video nhúng) vào ô URL và nhấn **`[ DOWNLOAD ]`**, ứng dụng tự động phân tích Master/Media playlist, tải toàn bộ phân đoạn `.ts` và ghép thành file `.mp4` hoàn chỉnh.
   - ⚡ **Ghép nối nhị phân Zero-Dependency:** 100% Native CIL C-level byte streaming, hoàn toàn không cần cài FFmpeg hay bất kỳ công cụ ngoài nào.
   - 📊 **Tiến trình chi tiết theo từng Segment:** Hiển thị rõ ràng số lượng phân đoạn đã tải (`X/Y segments - %`), hỗ trợ nút **STOP** một chạm để dừng và dọn dẹp file tạm tức thì.
+- [x] **Tải Video & Reels Facebook:**
+  - 🔵 Chỉ cần dán link video/Reels/`fb.watch` công khai bất kỳ và bấm **`[ DOWNLOAD ]`** — không cần đăng nhập, không cần cookie, không cần yt-dlp/FFmpeg.
+  - 🔗 Link thiếu cũng chạy: dán `facebook.com/...` hay `fb.watch/...` không có `https://`, ứng dụng tự bổ sung đầy đủ.
+  - 🛡️ Nếu link trả về hết hạn và chỉ còn là trang giữ chỗ (không phải video), file lỗi sẽ tự động bị xóa và báo rõ ràng, không để lại file `.mp4` giả.
+- [x] **Tải Video TikTok:**
+  - 🎵 Dán link video TikTok (`tiktok.com/@user/video/...`) và bấm **`[ DOWNLOAD ]`** — ứng dụng tự phân giải link MP4 trực tiếp và lưu theo đúng tên video.
 - [x] **Tích hợp cả phiên bản CLI và GUI:**
   - `tv-downloader-gui.exe`: Ứng dụng đồ họa người dùng (~28 KB).
   - `tv-downloader-cli.exe`: Dành cho lập trình viên chạy lệnh terminal hoặc tích hợp kịch bản tự động (~16 KB).
