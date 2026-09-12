@@ -1,0 +1,100 @@
+# TokenVector Media Downloader
+
+> Ultra-lightweight media downloader (~32KB) written in TokenVector (.tkv),
+> compiled to native .NET CIL. Downloads YouTube, Facebook and TikTok videos
+> on Windows, Linux and macOS. Zero dependencies: no Python, yt-dlp or FFmpeg.
+
+## Binaries (use these, do not rebuild unless changing source)
+
+- `tv-downloader-gui.exe` (~32 KB): WinForms GUI — YouTube formats, HLS,
+  transcripts, progress bar, STOP button, Facebook/TikTok download.
+  Windows: double-click. Linux: `xvfb-run mono tv-downloader-gui.exe`
+  (needs `mono-runtime libmono-system-windows-forms4.0-cil libgdiplus xvfb`).
+  macOS: Mono MDK + XQuartz, then `mono tv-downloader-gui.exe`.
+- `tv-downloader-cli.exe` (~25 KB): `tv-downloader-cli.exe <media_url>
+  [c_user] [xs]` (Linux/macOS: prefix with `mono`). Facebook saves as
+  `facebook_video.mp4`, TikTok as `tiktok_video.mp4`.
+
+## CLI JSON mode (for AI agents)
+
+Add `--json` in any position. Stdout is exactly one JSON line
+(a bare return code may follow on its own line — ignore it):
+
+```text
+{"status":"ok","platform":"tiktok","file":"tiktok_video.mp4"}
+{"status":"error","platform":"facebook","code":3,"message":"No video link found"}
+```
+
+Fields: `status` = `ok` | `error`; `platform` = `facebook` | `tiktok` |
+`unknown`. Error `code`: 0 ok, 2 page/API unreachable, 3 no video link
+found, 4 file download failed, 5 placeholder pages on every attempt,
+6 JSON mode supports facebook and tiktok links only.
+
+## Rules
+
+- Public content only. Login-walled/private videos and stories are not
+  downloadable — report this, do not retry blindly.
+- TikTok needs a direct video link (`.../video/<ID>`); `/foryou` feed links
+  contain no video — ask the user for the specific link.
+- Bare links work (`facebook.com/...` without `https://` is auto-completed).
+- Verify downloads: real MP4 starts with bytes `00 00 00 .. 66 74 79 70`
+  (`ftyp`); a file starting with `3C` (`<`) is an HTML error page.
+- Facebook downloads may take minutes (up to 10 automatic attempts across
+  qualities). Wait instead of re-issuing the command.
+- Never invent `c_user`/`xs` cookie values — only use user-pasted ones.
+
+## Source layout
+
+- `src/cli_runner.tkv` (entry `main`), `src/gui_runner.tkv` (entry `run`),
+  `src/core_engine.tkv` (URL detection, Facebook/TikTok resolvers, retry).
+- `il_features/win32_gui_window.tkv`: WinForms UI + embedded-CIL download
+  engine (HLS parser, InnerTube transcript, Facebook/TikTok branches).
+- `il_features/stdlib_http*.tkv`: `http_get`, `http_get_h`, `http_post`,
+  `http_download_file`, `http_request` builtins (modern TLS enforced).
+- `il_features/stdlib_os.tkv`, `il_features/file_io.tkv`: `os_system`
+  (POSIX-aware: `/bin/sh` vs `cmd.exe`), `file_delete`, file IO.
+
+## TokenVector language essentials
+
+- Statically-typed `.tkv` syntax: `def f(x: "str") -> "i32"`, classes,
+  `__tkv_import__`. Types: `str`, `i32`, `i64`, `f64`.
+- No explicitly-typed locals (`h = 0`, never `h: "i32" = 0`); no `ord()`;
+  slicing only as a direct assignment RHS (`sub = s[i:j]`); `str()` on
+  simple variables only; value-returning builtins must be assigned
+  (`pad = thread_sleep(5000)`), except `void` builtins (`print`,
+  `write_file`, `file_delete`, `os_system`).
+- Strings: `len`, `find(sub[, start])`, `startswith`, `endswith`,
+  `replace`, `strip`, `upper`, `lower`; concatenate with `+`.
+- `if/elif/else`, `while`, `for i in range(n)`, `try/except Exception`,
+  list literals + indexing + `len()`, dicts via `h = {}` + `h["k"] = v`.
+- CIL gotchas: keep return types/values type-consistent (`i32`, Mono
+  rejects `i32`-in-`i64` returns); exit `try` blocks only with `leave`;
+  prefer long branches (`br`, `bge`) over short ones (`.s` range limits).
+
+## Build and test
+
+- Compiler: `tkvc` from https://github.com/nguyenhungtran18/TokenVector
+  (place `tkvc.exe`/`tkvc` next to the scripts; it is NOT in this repo).
+- Windows: `.\build.bat`. Linux/macOS: `./build.sh`.
+  Single targets: `tkvc build src/gui_runner.tkv --entry run --out
+  bin/tv-downloader-gui.exe`, `tkvc build src/cli_runner.tkv --entry
+  main --out bin/tv-downloader-cli.exe`. Copy tested binaries from `bin/`
+  to the repo root for release.
+- Unit-test `.tkv` logic with a temporary `src/*_selftest.tkv` harness
+  (`__tkv_import__ = "core_engine"`), build to `bin/`, run, then delete it.
+- Linux check: `mono tv-downloader-cli.exe <link>` under WSL; GUI under
+  `Xvfb` + screenshot. CI: `.github/workflows/test.yml` (3 OSes).
+
+## Docs index
+
+- `README.md` (English) / `README.vi.md` (Tiếng Việt): features, usage,
+  cross-platform status, support links.
+- `USER_GUIDE.txt` / `USER_GUIDE_EN.md`: end-user manual.
+- `DEV_GUIDE.md` / `DEV_GUIDE_VI.md`: TokenVector coding + build guide,
+  common pitfalls.
+- `SKILL.md`: agent contract for using the CLI as an AI tool.
+- `RELEASE_NOTES_v1.0.md`: v1.0 highlights, asset hashes, quick start.
+- `LICENSE`: MIT. Author: Tran Nguyen Hung
+  (nguyen.hung.tran.18@gmail.com).
+- Funding: GitHub Sponsors, Buy Me a Coffee, MB Bank transfer, MoMo QR
+  (see README Support section).
