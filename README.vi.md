@@ -119,6 +119,7 @@ TokenVector-Media-Downloader/
 ├── DEV_GUIDE.md              # Hướng dẫn code TokenVector & build app (tiếng Anh)
 ├── DEV_GUIDE_VI.md           # Hướng dẫn code TokenVector & build app (tiếng Việt)
 ├── SKILL.md                  # Hợp đồng agent: dùng CLI như AI tool
+├── llms.txt                  # Tóm tắt dự án cho AI đọc
 ├── LICENSE                   # Giấy phép MIT
 ├── README.md                 # Tài liệu tiếng Anh (English documentation)
 └── README.vi.md              # Tài liệu tiếng Việt (Vietnamese documentation)
