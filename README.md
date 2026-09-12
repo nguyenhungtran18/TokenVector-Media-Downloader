@@ -206,7 +206,9 @@ binaries tiny and the updates coming:
   (Vietnam-supported 🇻🇳, cards welcome from anywhere)
 - **Buy Me a Coffee:** https://buymeacoffee.com/nguyen.hung.tran.18
   (one-time or monthly, 5% platform fee)
-- **MoMo / Bank transfer:** coming soon — links will be added here.
+- **Bank transfer (Vietnam):** MB Bank — Account: `0989503018` —
+  TRAN NGUYEN HUNG.
+- **MoMo:** QR code below.
 
 ## 👨‍💻 Author & Contact
 

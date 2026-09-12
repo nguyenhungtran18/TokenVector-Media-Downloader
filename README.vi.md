@@ -196,7 +196,9 @@ Nếu công cụ này giúp ích cho bạn, hãy mời tác giả một ly cà p
 - **Buy Me a Coffee:** https://buymeacoffee.com/nguyen.hung.tran.18
   (một lần hoặc hàng tháng)
 - **GitHub Sponsors:** https://github.com/sponsors/nguyenhungtran18
-- **MoMo / Chuyển khoản:** sắp bổ sung.
+- **Chuyển khoản (Việt Nam):** Ngân hàng MB — STK: `0989503018` —
+  TRAN NGUYEN HUNG.
+- **MoMo:** quét mã QR bên dưới.
 
 ## 📄 Bản quyền & Giấy phép (License)
 
