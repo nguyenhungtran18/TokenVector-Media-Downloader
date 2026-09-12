@@ -174,7 +174,7 @@ sudo apt-get install -y mono-runtime mono-devel libgdiplus mono-winforms
 mono tv-downloader-gui.exe
 
 # 3. Khởi chạy ứng dụng dòng lệnh (CLI):
-mono tv-downloader-cli.exe <link_youtube>
+mono tv-downloader-cli.exe <link_video>
 ```
 
 #### B. Trên macOS:
@@ -186,8 +186,17 @@ brew install --cask xquartz mono-mdk
 mono tv-downloader-gui.exe
 
 # 3. Khởi chạy ứng dụng dòng lệnh (CLI):
-mono tv-downloader-cli.exe <link_youtube>
+mono tv-downloader-cli.exe <link_video>
 ```
+
+## 💖 Ủng hộ dự án
+
+Nếu công cụ này giúp ích cho bạn, hãy mời tác giả một ly cà phê:
+
+- **Buy Me a Coffee:** https://buymeacoffee.com/nguyen.hung.tran.18
+  (một lần hoặc hàng tháng)
+- **GitHub Sponsors:** https://github.com/sponsors/nguyenhungtran18
+- **MoMo / Chuyển khoản:** sắp bổ sung.
 
 ## 📄 Bản quyền & Giấy phép (License)
 

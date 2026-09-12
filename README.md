@@ -204,8 +204,9 @@ binaries tiny and the updates coming:
 
 - **GitHub Sponsors:** https://github.com/sponsors/nguyenhungtran18
   (Vietnam-supported 🇻🇳, cards welcome from anywhere)
-- **Buy Me a Coffee / MoMo / Bank transfer:** coming soon — links will be
-  added here.
+- **Buy Me a Coffee:** https://buymeacoffee.com/nguyen.hung.tran.18
+  (one-time or monthly, 5% platform fee)
+- **MoMo / Bank transfer:** coming soon — links will be added here.
 
 ## 👨‍💻 Author & Contact
 
