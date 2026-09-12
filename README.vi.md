@@ -89,6 +89,7 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 - [x] **Tải Video TikTok:**
   - 🎵 Dán link video TikTok (`tiktok.com/@user/video/...`) và bấm **`[ DOWNLOAD ]`** — ứng dụng tự phân giải link MP4 trực tiếp, GUI lưu theo đúng tên video, CLI lưu thành `tiktok_video.mp4`.
 - [x] **Ghi chú CLI Facebook:** CLI lưu video Facebook thành `facebook_video.mp4` và báo mã lỗi riêng từng trường hợp (`0` xong, `2` không tải được trang/API, `3` không thấy link video, `4` tải file thất bại, `5` toàn gặp trang đệm).
+- [x] **CLI cho AI (`--json` + `SKILL.md`):** thêm `--json` ở vị trí bất kỳ, stdout gọn đúng 1 dòng JSON máy đọc được, vd `{"status":"ok","platform":"tiktok","file":"tiktok_video.mp4"}` — mọi AI agent có shell đều tải video được. Xem `SKILL.md` để biết hợp đồng đầy đủ (mã lỗi, chỉ nội dung public, cách kiểm tra file).
 - [x] **Tích hợp cả phiên bản CLI và GUI:**
   - `tv-downloader-gui.exe`: Ứng dụng đồ họa người dùng (~32 KB).
   - `tv-downloader-cli.exe`: Dành cho lập trình viên chạy lệnh terminal hoặc tích hợp kịch bản tự động (~25 KB). Cách dùng: `tv-downloader-cli.exe <media_url> [c_user] [xs]`.
@@ -117,6 +118,7 @@ TokenVector-Media-Downloader/
 ├── USER_GUIDE_EN.md          # Tài liệu hướng dẫn sử dụng nhanh (tiếng Anh)
 ├── DEV_GUIDE.md              # Hướng dẫn code TokenVector & build app (tiếng Anh)
 ├── DEV_GUIDE_VI.md           # Hướng dẫn code TokenVector & build app (tiếng Việt)
+├── SKILL.md                  # Hợp đồng agent: dùng CLI như AI tool
 ├── LICENSE                   # Giấy phép MIT
 ├── README.md                 # Tài liệu tiếng Anh (English documentation)
 └── README.vi.md              # Tài liệu tiếng Việt (Vietnamese documentation)

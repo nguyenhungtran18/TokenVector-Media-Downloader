@@ -90,6 +90,7 @@ Unlike traditional media downloaders that are notoriously heavy (often 30 MB –
 - [x] **TikTok Videos Downloader:**
   - 🎵 Paste a TikTok video link (`tiktok.com/@user/video/...`) and click **`[ DOWNLOAD ]`** — the app resolves the direct MP4 and saves it under the video title (GUI) or as `tiktok_video.mp4` (CLI).
 - [x] **Facebook CLI notes:** the CLI saves Facebook downloads as `facebook_video.mp4` and reports a distinct error code for each outcome (`0` ok, `2` page/API unreachable, `3` no video link found, `4` file download failed, `5` placeholder pages on every attempt).
+- [x] **AI-Ready CLI (`--json` + `SKILL.md`):** add `--json` in any position and stdout becomes exactly one machine-readable line, e.g. `{"status":"ok","platform":"tiktok","file":"tiktok_video.mp4"}` — so any AI agent with shell access can download videos reliably. See `SKILL.md` for the agent contract (error codes, public-only rule, file verification).
 - [x] **Both GUI and CLI Editions Included:**
   - `tv-downloader-gui.exe`: Modern graphical user application (~32 KB).
   - `tv-downloader-cli.exe`: Terminal utility for scripting and automated workflows (~25 KB). Usage: `tv-downloader-cli.exe <media_url> [c_user] [xs]`.
@@ -116,6 +117,7 @@ TokenVector-Media-Downloader/
 ├── USER_GUIDE_EN.md          # Quick user manual (English)
 ├── DEV_GUIDE.md              # TokenVector coding & build guide (English)
 ├── DEV_GUIDE_VI.md           # TokenVector coding & build guide (Vietnamese)
+├── SKILL.md                  # Agent contract: use the CLI as an AI tool
 ├── LICENSE                   # MIT License
 ├── README.md                 # English documentation (this file)
 └── README.vi.md              # Vietnamese documentation (Tài liệu tiếng Việt)
