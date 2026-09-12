@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/Language-TokenVector%20(.tkv)-007ACC?style=for-the-badge&logo=codeforces&logoColor=white" alt="TokenVector" />
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-success?style=for-the-badge" alt="Cross Platform" />
   <img src="https://img.shields.io/badge/CI%20Matrix-Ubuntu%20%7C%20macOS%20%7C%20Windows%20Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI Passing" />
-  <img src="https://img.shields.io/badge/Binary%20Size-~25%20KB-blue?style=for-the-badge" alt="Binary Size" />
+  <img src="https://img.shields.io/badge/Binary%20Size-%3C35%20KB-blue?style=for-the-badge" alt="Binary Size" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
 </p>
 
@@ -19,7 +19,7 @@
 
 Unlike traditional media downloaders that are notoriously heavy (often 30 MB – 150 MB due to bundling Python runtimes, Node.js, or Chromium engines), **TokenVector Downloader** harnesses the power of the TokenVector Compiler (`tkvc`) to compile directly to native Common Intermediate Language (CIL/MSIL) bytecode. This delivers:
 
-- 🚀 **Ultra-lightweight binary:** Full-featured GUI application weighs only **~28 KB**!
+- 🚀 **Ultra-lightweight binary:** Full-featured GUI application weighs only **~32 KB**, CLI only **~25 KB**!
 - ⚡ **Instant startup:** 0-second delay, minimal RAM footprint (< 15 MB under load).
 - 🛡️ **Zero Dependencies:** Fully standalone, direct native HTTP/HTTPS streaming, HLS parsing, and stream resolution.
 - 🌐 **True Cross-Platform:** Runs seamlessly on **Windows** (Native PE), **Linux** (Ubuntu, Debian, Arch...), and **macOS** (Apple Silicon & Intel) in both Graphical User Interface (GUI) and Command-Line Interface (CLI) modes.
@@ -31,7 +31,7 @@ Unlike traditional media downloaders that are notoriously heavy (often 30 MB –
 | Feature / Metric | ⚡ **TokenVector Media Downloader** | 🐢 **yt-dlp (Traditional)** | The TokenVector Advantage |
 | :--- | :--- | :--- | :--- |
 | **Programming Language** | **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** | Python (C-Python runtime) | Clean modern language, optimized native CIL architecture |
-| **Executable Size (.exe)** | **~28 KB (28,160 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Over 1,000x lighter** |
+| **Executable Size (.exe)** | **~32 KB (GUI) / ~25 KB (CLI)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Over 500x lighter** |
 | **Third-Party Dependencies** | **0 (Zero Dependency)** | Requires Python Runtime, FFmpeg (~80 MB) to merge audio/video | Runs out-of-the-box, no external utilities needed |
 | **User Interface (UI)** | **Cross-platform GUI (WinForms) & CLI** | Command-Line only (requires complex wrappers) | Intuitive, responsive UI across Windows, Linux & macOS |
 | **Startup Latency** | **Instant (< 50ms)** | 1.5s – 3.5s (due to unpacking Python environment) | Significantly faster, zero noticeable lag |
@@ -87,10 +87,11 @@ Unlike traditional media downloaders that are notoriously heavy (often 30 MB –
   - 🔗 Bare links work too: `facebook.com/...` or `fb.watch/...` pasted without `https://` are completed automatically.
   - 🛡️ If a resolved link turns out to be an expired placeholder page instead of video bytes, it is deleted automatically and reported clearly instead of leaving a fake `.mp4` behind.
 - [x] **TikTok Videos Downloader:**
-  - 🎵 Paste a TikTok video link (`tiktok.com/@user/video/...`) and click **`[ DOWNLOAD ]`** — the app resolves the direct MP4 and saves it under the video title.
+  - 🎵 Paste a TikTok video link (`tiktok.com/@user/video/...`) and click **`[ DOWNLOAD ]`** — the app resolves the direct MP4 and saves it under the video title (GUI) or as `tiktok_video.mp4` (CLI).
+- [x] **Facebook CLI notes:** the CLI saves Facebook downloads as `facebook_video.mp4` and reports a distinct error code for each outcome (`0` ok, `2` page/API unreachable, `3` no video link found, `4` file download failed, `5` placeholder pages on every attempt).
 - [x] **Both GUI and CLI Editions Included:**
-  - `tv-downloader-gui.exe`: Modern graphical user application (~28 KB).
-  - `tv-downloader-cli.exe`: Terminal utility for scripting and automated workflows (~16 KB).
+  - `tv-downloader-gui.exe`: Modern graphical user application (~32 KB).
+  - `tv-downloader-cli.exe`: Terminal utility for scripting and automated workflows (~25 KB). Usage: `tv-downloader-cli.exe <media_url> [c_user] [xs]`.
 
 ---
 
@@ -106,8 +107,8 @@ TokenVector-Media-Downloader/
 ├── il_features/              # CIL compiler features & WinForms UI modules
 │   ├── win32_gui_window.tkv  # Native WinForms UI & stream decoding logic
 │   └── ...                   # TokenVector IL library modules
-├── tv-downloader-gui.exe     # Compiled GUI executable (~28 KB, runs on Win/Linux/macOS)
-├── tv-downloader-cli.exe     # Compiled CLI executable (~16 KB, runs on Win/Linux/macOS)
+├── tv-downloader-gui.exe     # Compiled GUI executable (~32 KB, runs on Win/Linux/macOS)
+├── tv-downloader-cli.exe     # Compiled CLI executable (~25 KB, runs on Win/Linux/macOS)
 ├── build.bat                 # Windows automated build script
 ├── build.sh                  # Linux & macOS automated build script
 ├── HUONG_DAN.txt             # Quick user manual
@@ -120,13 +121,24 @@ TokenVector-Media-Downloader/
 
 - **On Windows:**
   - **Launch GUI:** Double-click `tv-downloader-gui.exe`.
-  - **Launch CLI:** Open Command Prompt / PowerShell: `.\tv-downloader-cli.exe <youtube_url>`.
-- **On Linux:**
-  - **GUI:** `mono tv-downloader-gui.exe`
-  - **CLI:** `mono tv-downloader-cli.exe <youtube_url>`
+  - **Launch CLI:** Open Command Prompt / PowerShell: `.\tv-downloader-cli.exe <media_url>`.
+- **On Linux (Ubuntu/Debian):**
+  - Prerequisites: `sudo apt-get install -y mono-runtime libmono-system-windows-forms4.0-cil libgdiplus xvfb`
+  - **GUI:** `xvfb-run mono tv-downloader-gui.exe` (`xvfb-run` only needed on headless servers; skip it on desktop).
+  - **CLI:** `mono tv-downloader-cli.exe <media_url>`
 - **On macOS:**
+  - Prerequisites: Mono MDK + XQuartz.
   - **GUI:** `mono tv-downloader-gui.exe`
-  - **CLI:** `mono tv-downloader-cli.exe <youtube_url>`
+  - **CLI:** `mono tv-downloader-cli.exe <media_url>`
+
+### ✅ Verified Cross-Platform Status (both files, zero Win32 P/Invoke):
+
+| File | Windows | Linux | macOS |
+| :--- | :--- | :--- | :--- |
+| `tv-downloader-cli.exe` (~25 KB) | Native ✅ | Verified on Ubuntu + Mono 6.8 ✅ (banner, demo flow, live TikTok download byte-identical to Windows) | Expected via Mono (covered by CI matrix, not yet run locally) |
+| `tv-downloader-gui.exe` (~32 KB) | Native ✅ | Verified rendered & running (Xvfb + openbox screenshot: full form, inputs, buttons, progress) ✅ | Expected via Mono + XQuartz (not yet run locally) |
+
+Notes: the GUI needs an X server (hence `xvfb-run` on headless machines) and `libgdiplus` for text rendering; the `os_system` bridge auto-selects `/bin/sh` on POSIX instead of `cmd.exe`.
 
 ---
 
@@ -158,7 +170,7 @@ sudo apt-get install -y mono-runtime mono-devel libgdiplus mono-winforms
 mono tv-downloader-gui.exe
 
 # 3. Launch CLI:
-mono tv-downloader-cli.exe <youtube_url>
+mono tv-downloader-cli.exe <media_url>
 ```
 
 #### B. On macOS:
@@ -170,7 +182,7 @@ brew install --cask xquartz mono-mdk
 mono tv-downloader-gui.exe
 
 # 3. Launch CLI:
-mono tv-downloader-cli.exe <youtube_url>
+mono tv-downloader-cli.exe <media_url>
 ```
 
 ---

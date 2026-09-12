@@ -1,6 +1,7 @@
 # Compiler binaries
 tkvc.exe
 bin/
+backup/
 *.part
 *.ytdl
 *.log

@@ -78,7 +78,7 @@ def _extern_void_builtin_names():
 
 def codegen_call_stmt(stmt, scope, body, body_dtype, ctx, sig, codegen_stmts_fn):
     """STMT_CODEGEN entry TRON VEN cho kind 'call_stmt' - CHI gom
-    write_file/append_file (goi ham nhu 1 LENH DOC LAP, khong gan bien) -
+    write_file/append_file/file_delete (goi ham nhu 1 LENH DOC LAP, khong gan bien) -
     goi ham do nguoi dung dinh nghia theo cach nay CHUA duoc ho tro (xem
     nhanh else, tranh im lang bo qua return value)."""
     name, call_args = stmt['call_node'][1], stmt['call_node'][2]
@@ -99,6 +99,11 @@ def codegen_call_stmt(stmt, scope, body, body_dtype, ctx, sig, codegen_stmts_fn)
         compile_expr(call_args[0], scope, body, 'str', ctx)
         compile_expr(call_args[1], scope, body, 'str', ctx)
         body.append('    call void [mscorlib]System.IO.File::AppendAllText(string, string)')
+    elif name == 'file_delete':
+        if len(call_args) != 1:
+            raise SyntaxError("il_codegen: file_delete(path) can dung 1 tham so")
+        compile_expr(call_args[0], scope, body, 'str', ctx)
+        body.append('    call void [mscorlib]System.IO.File::Delete(string)')
     elif name in _logging_feature.LOG_STMT_CODEGEN:
         # logging (Phase 4 backlog, phien 5, 2026-08-11) - xem
         # il_features/logging_feature.py. Ham VOID (log_debug/.../
@@ -119,6 +124,59 @@ def codegen_call_stmt(stmt, scope, body, body_dtype, ctx, sig, codegen_stmts_fn)
         # seed(n) (batch 5.5, 2026-08-12) - xem il_features/stdlib_random.py.
         # Ham VOID, dispatch qua day giong log_X/pickle_dump_X/sys_exit.
         _stdlib_random.RANDOM_STMT_CODEGEN[name](call_args, scope, body, ctx)
+    elif name == 'os_system':
+        if len(call_args) != 1:
+            raise SyntaxError("il_codegen: os_system(cmd) can dung 1 tham so")
+        ctx['label_counter'][0] += 1
+        _n = ctx['label_counter'][0]
+        _lbl_win = f"{ctx['prefix']}_ossys{_n}_win"
+        _lbl_done = f"{ctx['prefix']}_ossys{_n}_done"
+        body.append('    ldstr "/bin/sh"')
+        body.append('    call bool [mscorlib]System.IO.File::Exists(string)')
+        body.append(f'    brfalse {_lbl_win}')
+        body.append('    newobj instance void [System]System.Diagnostics.ProcessStartInfo::.ctor()')
+        body.append('    dup')
+        body.append('    ldstr "/bin/sh"')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_FileName(string)')
+        body.append('    dup')
+        body.append('    ldstr "-c "')
+        compile_expr(call_args[0], scope, body, 'str', ctx)
+        body.append('    call string [mscorlib]System.String::Concat(string, string)')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_Arguments(string)')
+        body.append('    dup')
+        body.append('    ldc.i4.1')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_WindowStyle(valuetype [System]System.Diagnostics.ProcessWindowStyle)')
+        body.append('    dup')
+        body.append('    ldc.i4.0')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_UseShellExecute(bool)')
+        body.append('    dup')
+        body.append('    ldc.i4.1')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_CreateNoWindow(bool)')
+        body.append('    call class [System]System.Diagnostics.Process [System]System.Diagnostics.Process::Start(class [System]System.Diagnostics.ProcessStartInfo)')
+        body.append('    callvirt instance void [System]System.Diagnostics.Process::WaitForExit()')
+        body.append(f'    br {_lbl_done}')
+        body.append(f'  {_lbl_win}:')
+        body.append('    newobj instance void [System]System.Diagnostics.ProcessStartInfo::.ctor()')
+        body.append('    dup')
+        body.append('    ldstr "cmd.exe"')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_FileName(string)')
+        body.append('    dup')
+        body.append('    ldstr "/c "')
+        compile_expr(call_args[0], scope, body, 'str', ctx)
+        body.append('    call string [mscorlib]System.String::Concat(string, string)')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_Arguments(string)')
+        body.append('    dup')
+        body.append('    ldc.i4.1')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_WindowStyle(valuetype [System]System.Diagnostics.ProcessWindowStyle)')
+        body.append('    dup')
+        body.append('    ldc.i4.0')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_UseShellExecute(bool)')
+        body.append('    dup')
+        body.append('    ldc.i4.1')
+        body.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_CreateNoWindow(bool)')
+        body.append('    call class [System]System.Diagnostics.Process [System]System.Diagnostics.Process::Start(class [System]System.Diagnostics.ProcessStartInfo)')
+        body.append('    callvirt instance void [System]System.Diagnostics.Process::WaitForExit()')
+        body.append(f'  {_lbl_done}:')
     elif name in EXPR_BUILTIN_CODEGEN and name in _extern_void_builtin_names():
         # Task 3 (2026-08-17, __tkv_extern_pinvoke__) - sua tan goc gioi han
         # cu: builtin dang ky qua register_expr_builtin (Phase 1/2 cac pragma

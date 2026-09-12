@@ -150,8 +150,16 @@ def _emit_dict_set(out, result_idx, key_emit, value_emit):
     out.append(f'    callvirt instance void {_DICT_SS}::set_Item(!0, !1)')
 
 
+def _push_tls12_full(out):
+    """Ep TLS hien dai (Tls12|Tls11|Tls = 4032) - Facebook tra 403 voi TLS cu
+    (xac minh THAT: TLS11 -> 403, TLS12 -> 200). Giong GUI downloader."""
+    out.append('    ldc.i4 4032')
+    out.append('    call void [System]System.Net.ServicePointManager::set_SecurityProtocol(valuetype [System]System.Net.SecurityProtocolType)')
+
+
 def push_http_request(args, scope, out, dtype, ctx):
     method = _method_literal(args)
+    _push_tls12_full(out)
     p = f'__hreq{id(args)}'
     _, req_idx, _ = scope[f'{p}_req']
     _, resp_idx, _ = scope[f'{p}_resp']

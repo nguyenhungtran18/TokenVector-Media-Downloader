@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """stdlib_os.py - Plug-and-Play module cho OS Operations (System.Environment & System.IO.Directory)
-
 Cung cap:
 - os_getenv(name) -> str
 - os_mkdir(path) -> i32
 - os_list_files(path) -> list[str]
-"""
+- os_system(cmd) -> void (thuc hien lenh shell)"""
 
 import re
 from il_core import parse_expr
@@ -20,12 +19,6 @@ _LIST_FILES_RE = re.compile(r'^os_list_files\((.+)\)$')
 
 
 def _push_os_getenv(args, scope, out, dtype, ctx):
-    # Nhan DUY NHAT moi lan goi (Giai doan 0.2 nhom 2, 2026-08-03) - can
-    # THIET vi builtin nay gio goi duoc NHIEU LAN trong CUNG 1 ham (vd
-    # 'os_getenv("A") + os_getenv("B")'), nhan co dinh 'os_getenv_end'
-    # nhu code cu se trung lap -> ilasm bao loi label da khai bao. Dung
-    # lai co che label_counter/prefix da co san cho ternary (xem
-    # _expr_ternary o il_codegen.py).
     ctx['label_counter'][0] += 1
     n = ctx['label_counter'][0]
     end_lbl = f"{ctx['prefix']}_osgetenv{n}_end"
@@ -119,11 +112,42 @@ register_expr_builtin('os_mkdir', _push_os_mkdir, 'i32')
 register_expr_builtin('os_list_files', _push_os_list_files, 'str', return_shape='list')
 register_assign_rhs_parser('os_list_files', try_rhs_os_list_files)
 register_first_pass_walk('assign_os_list_files', fpw_os_list_files)
-register_stmt_codegen('assign_os_list_files', codegen_os_list_files)
-
 def _push_os_system(args, scope, out, dtype, ctx):
     if len(args) != 1:
         raise SyntaxError("il_codegen: os_system(cmd) can dung 1 tham so")
+    # Cross-platform: POSIX (/bin/sh) vs Windows (cmd.exe). Kiem tra luc CHAY.
+    ctx['label_counter'][0] += 1
+    n = ctx['label_counter'][0]
+    lbl_win = f"{ctx['prefix']}_ossys{n}_win"
+    lbl_done = f"{ctx['prefix']}_ossys{n}_done"
+    out.append('    ldstr "/bin/sh"')
+    out.append('    call bool [mscorlib]System.IO.File::Exists(string)')
+    out.append(f'    brfalse {lbl_win}')
+    # POSIX
+    out.append('    newobj instance void [System]System.Diagnostics.ProcessStartInfo::.ctor()')
+    out.append('    dup')
+    out.append('    ldstr "/bin/sh"')
+    out.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_FileName(string)')
+    out.append('    dup')
+    out.append('    ldstr "-c "')
+    ctx['compile_expr'](args[0], scope, out, 'str', ctx)
+    out.append('    call string [mscorlib]System.String::Concat(string, string)')
+    out.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_Arguments(string)')
+    out.append('    dup')
+    out.append('    ldc.i4.1')
+    out.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_WindowStyle(valuetype [System]System.Diagnostics.ProcessWindowStyle)')
+    out.append('    dup')
+    out.append('    ldc.i4.0')
+    out.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_UseShellExecute(bool)')
+    out.append('    dup')
+    out.append('    ldc.i4.1')
+    out.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_CreateNoWindow(bool)')
+    out.append('    call class [System]System.Diagnostics.Process [System]System.Diagnostics.Process::Start(class [System]System.Diagnostics.ProcessStartInfo)')
+    out.append('    dup')
+    out.append('    callvirt instance void [System]System.Diagnostics.Process::WaitForExit()')
+    out.append('    callvirt instance int32 [System]System.Diagnostics.Process::get_ExitCode()')
+    out.append(f'    br {lbl_done}')
+    out.append(f'  {lbl_win}:')
     out.append('    newobj instance void [System]System.Diagnostics.ProcessStartInfo::.ctor()')
     out.append('    dup')
     out.append('    ldstr "cmd.exe"')
@@ -143,9 +167,12 @@ def _push_os_system(args, scope, out, dtype, ctx):
     out.append('    ldc.i4.1')
     out.append('    callvirt instance void [System]System.Diagnostics.ProcessStartInfo::set_CreateNoWindow(bool)')
     out.append('    call class [System]System.Diagnostics.Process [System]System.Diagnostics.Process::Start(class [System]System.Diagnostics.ProcessStartInfo)')
+    out.append('    dup')
     out.append('    callvirt instance void [System]System.Diagnostics.Process::WaitForExit()')
-    out.append('    ldc.i4 0')
+    out.append('    callvirt instance int32 [System]System.Diagnostics.Process::get_ExitCode()')
+    out.append(f'  {lbl_done}:')
+
+
+register_stmt_codegen('assign_os_list_files', codegen_os_list_files)
 
 register_expr_builtin('os_system', _push_os_system, 'i32')
-
-

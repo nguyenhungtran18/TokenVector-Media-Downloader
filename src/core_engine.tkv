@@ -100,7 +100,7 @@ class TransferMetricsCalculator:
 
         return self.smoothed_speed
 
-    def estimate_time_remaining(self, total_bytes: "i64", current_bytes: "i64") -> "i64":
+    def estimate_time_remaining(self, total_bytes: "i64", current_bytes: "i64") -> "i32":
         if self.smoothed_speed <= 1.0:
             return -1
 
@@ -155,11 +155,268 @@ class ExtractorBridgeCoordinator:
 
     def execute_stream_download(self, target_url: "str", format_spec: "str", out_file: "str") -> "i32":
         cmd = self.extractor_bin + " -f \"" + format_spec + "\" -o \"" + out_file + "\" \"" + target_url + "\""
-        return os_system(cmd)
+        try:
+            return os_system(cmd)
+        except Exception:
+            return 1
 
     def check_file_ready(self, file_path: "str") -> "i32":
         return file_exists(file_path)
 
 def download_direct_url(url: "str", target_path: "str") -> "i32":
     return http_download_file(url, target_path)
+
+
+# -------------------------------------------------------------------------------
+# 6. Facebook / TikTok Resolver (Zero-Dependency: khong can yt-dlp/ffmpeg)
+# Luong Facebook: native (http_get_h + tach URL mp4 + http_download_file),
+# that bai -> API resolve (loader.to) xoay 3 format, toi da 10 luot thu.
+# Luong TikTok: API tikwm (hdplay -> play -> wmplay).
+# Ma loi: 0 = thanh cong, 2 = khong tai duoc trang/API,
+# 3 = khong tim thay link video, 4 = tai file that bai,
+# 5 = link luon tra ve trang dem (het luot thu).
+# Gioi han: chi ho tro noi dung cong khai (public).
+# -------------------------------------------------------------------------------
+def fb_normalize_url(url: "str") -> "str":
+    u = url.strip()
+    if len(u) == 0:
+        return ""
+    if u.startswith("http://") == 1:
+        return u
+    if u.startswith("https://") == 1:
+        return u
+    if u.startswith("www.") == 1:
+        return "https://" + u
+    if u.startswith("fb.watch") == 1:
+        return "https://" + u
+    if u.startswith("facebook.com") == 1:
+        return "https://www." + u
+    return "https://" + u
+
+def url_encode_simple(s: "str") -> "str":
+    e0 = s.replace("%", "%25")
+    e1 = e0.replace(":", "%3A")
+    e2 = e1.replace("/", "%2F")
+    e3 = e2.replace("?", "%3F")
+    e4 = e3.replace("&", "%26")
+    e5 = e4.replace("=", "%3D")
+    e6 = e5.replace("+", "%2B")
+    e7 = e6.replace("#", "%23")
+    e8 = e7.replace(" ", "%20")
+    return e8
+
+def fb_is_facebook_url(url: "str") -> "i32":
+    pos1 = url.find("facebook.com")
+    pos2 = url.find("fb.watch")
+    if pos1 >= 0:
+        return 1
+    if pos2 >= 0:
+        return 1
+    return 0
+
+def fb_extract_value(html: "str", marker: "str", from_pos: "i32") -> "str":
+    mpos = html.find(marker, from_pos)
+    if mpos < 0:
+        return ""
+    vstart = mpos + len(marker)
+    vend = html.find("\"", vstart)
+    if vend < 0:
+        return ""
+    part = html[vstart:vend]
+    return part
+
+def fb_unescape_url(raw: "str") -> "str":
+    step1 = raw.replace("\\/", "/")
+    step2 = step1.replace("\\u00253A", ":")
+    step3 = step2.replace("\\u00252F", "/")
+    step4 = step3.replace("&amp;", "&")
+    return step4
+
+def fb_resolve_direct_url(page_html: "str") -> "str":
+    hd = fb_extract_value(page_html, "playable_url_quality_hd\":\"", 0)
+    if len(hd) > 0:
+        clean_hd = fb_unescape_url(hd)
+        return clean_hd
+    sd = fb_extract_value(page_html, "playable_url\":\"", 0)
+    if len(sd) > 0:
+        clean_sd = fb_unescape_url(sd)
+        return clean_sd
+    nat_hd = fb_extract_value(page_html, "browser_native_hd_url\":\"", 0)
+    if len(nat_hd) > 0:
+        clean_nat_hd = fb_unescape_url(nat_hd)
+        return clean_nat_hd
+    nat_sd = fb_extract_value(page_html, "browser_native_sd_url\":\"", 0)
+    if len(nat_sd) > 0:
+        clean_nat_sd = fb_unescape_url(nat_sd)
+        return clean_nat_sd
+    hdsrc = fb_extract_value(page_html, "hd_src\":\"", 0)
+    if len(hdsrc) > 0:
+        clean_hdsrc = fb_unescape_url(hdsrc)
+        return clean_hdsrc
+    sdsrc = fb_extract_value(page_html, "sd_src\":\"", 0)
+    if len(sdsrc) > 0:
+        clean_sdsrc = fb_unescape_url(sdsrc)
+        return clean_sdsrc
+    og1 = fb_extract_value(page_html, "og:video:url\" content=\"", 0)
+    if len(og1) > 0:
+        clean_og1 = fb_unescape_url(og1)
+        return clean_og1
+    og2 = fb_extract_value(page_html, "og:video\" content=\"", 0)
+    if len(og2) > 0:
+        clean_og2 = fb_unescape_url(og2)
+        return clean_og2
+    return ""
+
+def fb_download(page_url: "str", out_file: "str", cookie: "str") -> "i32":
+    html = ""
+    pasted = page_url.find("playable_url")
+    if pasted < 0:
+        pasted = page_url.find("browser_native")
+    if pasted < 0:
+        pasted = page_url.find("hd_src")
+    if pasted < 0:
+        pasted = page_url.find("og:video")
+    if pasted >= 0:
+        html = page_url
+    else:
+        headers = {}
+        headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        headers["Accept-Language"] = "en-US,en;q=0.9"
+        if len(cookie) > 0:
+            headers["Cookie"] = cookie
+        try:
+            html = http_get_h(page_url, headers)
+        except Exception:
+            return 2
+    if len(html) == 0:
+        return 2
+    direct = fb_resolve_direct_url(html)
+    if len(direct) == 0:
+        return 3
+    ok = http_download_file(direct, out_file)
+    if ok == 1:
+        return 0
+    return 4
+
+def loader_poll_download(progress_url: "str") -> "str":
+    i = 0
+    while i < 10:
+        pj = ""
+        try:
+            pj = http_get(progress_url)
+        except Exception:
+            pj = ""
+        if len(pj) > 0:
+            dl = fb_extract_value(pj, "\"download_url\":\"", 0)
+            if len(dl) > 0:
+                clean = fb_unescape_url(dl)
+                return clean
+        pad = thread_sleep(5000)
+        i = i + 1
+    return ""
+
+def loader_resolve(page_url: "str", fmt: "str") -> "str":
+    enc = url_encode_simple(page_url)
+    base = "https://loader.to/ajax/download.php?format="
+    tmp = base + fmt
+    tmp2 = tmp + "&url="
+    full = tmp2 + enc
+    init = ""
+    try:
+        init = http_get(full)
+    except Exception:
+        return ""
+    if len(init) == 0:
+        return ""
+    prog = fb_extract_value(init, "\"progress_url\":\"", 0)
+    if len(prog) > 0:
+        clean_prog = fb_unescape_url(prog)
+        return loader_poll_download(clean_prog)
+    direct = fb_extract_value(init, "\"download_url\":\"", 0)
+    if len(direct) > 0:
+        clean_direct = fb_unescape_url(direct)
+        return clean_direct
+    return ""
+
+def fb_validate_mp4(path: "str") -> "i32":
+    c = ""
+    try:
+        c = read_file(path)
+    except Exception:
+        return 0
+    if len(c) == 0:
+        return 0
+    if c.startswith("<") == 1:
+        return 0
+    return 1
+
+def fb_drop_bad_file(out_file: "str") -> "i32":
+    if file_exists(out_file) == 1:
+        file_delete(out_file)
+    return 0
+
+def fb_download_retry(page_url: "str", out_file: "str", cookie: "str") -> "i32":
+    last_rc = 4
+    rc0 = fb_download(page_url, out_file, cookie)
+    if rc0 == 0:
+        if fb_validate_mp4(out_file) == 1:
+            return 0
+        drop0 = fb_drop_bad_file(out_file)
+        last_rc = 5
+    else:
+        last_rc = rc0
+    fmts = ["480", "720", "1080"]
+    attempt = 1
+    while attempt < 10:
+        m = attempt % 3
+        f = fmts[m]
+        direct = loader_resolve(page_url, f)
+        if len(direct) > 0:
+            ok = http_download_file(direct, out_file)
+            if ok == 1:
+                if fb_validate_mp4(out_file) == 1:
+                    return 0
+                dropn = fb_drop_bad_file(out_file)
+                last_rc = 5
+        attempt = attempt + 1
+    return last_rc
+
+def tt_is_tiktok_url(url: "str") -> "i32":
+    p1 = url.find("tiktok.com")
+    if p1 >= 0:
+        return 1
+    p2 = url.find("vt.tiktok")
+    if p2 >= 0:
+        return 1
+    return 0
+
+def tt_download_one(js: "str", marker: "str", out_file: "str") -> "i32":
+    raw = fb_extract_value(js, marker, 0)
+    if len(raw) == 0:
+        return 0
+    clean = fb_unescape_url(raw)
+    ok = http_download_file(clean, out_file)
+    if ok == 1:
+        if fb_validate_mp4(out_file) == 1:
+            return 1
+        drop = fb_drop_bad_file(out_file)
+    return 0
+
+def tt_download(page_url: "str", out_file: "str") -> "i32":
+    enc = url_encode_simple(page_url)
+    api = "https://www.tikwm.com/api/?url=" + enc
+    js = ""
+    try:
+        js = http_get(api)
+    except Exception:
+        return 2
+    if len(js) == 0:
+        return 2
+    if tt_download_one(js, "\"hdplay\":\"", out_file) == 1:
+        return 0
+    if tt_download_one(js, "\"play\":\"", out_file) == 1:
+        return 0
+    if tt_download_one(js, "\"wmplay\":\"", out_file) == 1:
+        return 0
+    return 3
 

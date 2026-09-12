@@ -19,7 +19,7 @@
 
 Khác với các ứng dụng tải media truyền thống cồng kềnh (thường nặng từ 30 MB – 150 MB do đóng gói kèm Python, Node.js hoặc Chromium), **TokenVector Downloader** tận dụng sức mạnh của trình biên dịch TokenVector Compiler (`tkvc`) biên dịch thẳng ra mã máy ảo Native Common Intermediate Language (CIL/MSIL) nhị phân. Kết quả mang lại:
 
-- 🚀 **File thực thi siêu nhỏ gọn:** Toàn bộ ứng dụng đầy đủ tính năng chỉ vỏn vẹn **~28 KB**!
+- 🚀 **File thực thi siêu nhỏ gọn:** Bản GUI đầy đủ tính năng chỉ vỏn vẹn **~32 KB**, bản CLI chỉ **~25 KB**!
 - ⚡ **Tốc độ khởi động tức thì:** 0 giây delay, mức tiêu hao RAM cực thấp (< 15 MB khi tải).
 - 🛡️ **Zero Dependencies:** Hoạt động độc lập, tự động phân giải luồng, hỗ trợ HLS `.m3u8` và tải HTTP stream trực tiếp.
 - 🌐 **Đa nền tảng thực sự (Cross-Platform):** Chạy mượt mà trên **Windows** (Native PE), **Linux** (Ubuntu, Debian, Arch...) và **macOS** (Apple Silicon & Intel) cho cả chế độ Giao diện đồ họa (GUI) lẫn Dòng lệnh (CLI).
@@ -31,7 +31,7 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 | Tiêu chí so sánh | ⚡ **TokenVector Media Downloader** | 🐢 **yt-dlp (Truyền thống)** | Ưu thế của TokenVector |
 | :--- | :--- | :--- | :--- |
 | **Ngôn ngữ phát triển** | **[TokenVector (.tkv)](https://github.com/nguyenhungtran18/TokenVector)** | Python (C-Python runtime) | Thuần ngôn ngữ mới, kiến trúc tối ưu AOT CIL |
-| **Dung lượng file chạy (.exe)** | **~28 KB (28,160 bytes)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Gọn nhẹ gấp >1,000 lần** |
+| **Dung lượng file chạy (.exe)** | **~32 KB (GUI) / ~25 KB (CLI)** | **~17 MB – 85 MB** (PyInstaller bundle) | **Gọn nhẹ gấp >500 lần** |
 | **Phụ thuộc bên thứ ba (Dependencies)** | **0 (Zero Dependency)** | Cần Python Runtime, FFmpeg (~80 MB) để merge audio/video | Chạy ngay độc lập, không cần bất kỳ công cụ ngoài |
 | **Giao diện người dùng (UI)** | **Đa nền tảng GUI (WinForms) & CLI** trực quan, gọn nhẹ | Chỉ có Command-Line (CLI), cần wrapper phức tạp | Trực quan, thân thiện trên cả Windows, Linux, macOS |
 | **Tốc độ khởi động** | **Tức thì (Instant < 50ms)** | 1.5s – 3.5s (do phải bung nén môi trường Python) | Nhanh hơn vượt trội, không độ trễ |
@@ -40,7 +40,7 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
 | **Hủy & Dọn dẹp an toàn (Stop)** | Nút **STOP** một chạm, tự động thu hồi luồng và dọn sạch `.part` | Nhấn `Ctrl+C` dễ để lại file rác dở dang | An toàn cho ổ đĩa, không lưu file hỏng |
 | **Hỗ trợ luồng HLS (.m3u8)** | **Bộ giải mã Native CIL HLS & Bộ lọc quảng cáo 3 lớp thông minh** | Phụ thuộc hoàn toàn vào nhị phân FFmpeg ngoài | Tải trực tiếp link .m3u8 và link nhúng web, tự lọc bỏ clip quảng cáo, ghép MP4 không cần FFmpeg |
 | **Trích xuất Transcript & Phụ đề** | **Nút bấm riêng `[ GET TRANSCRIPT ]` (tải đồng thời `.srt` & `_transcript.txt`)** | Cần script Python phụ (`yt-dlp-transcript`) + cài thư viện `srt` | 1 click tải tức thì, không cần Python, sẵn sàng nạp LLM AI |
-| **Khả năng đóng gói & phân phối** | Chạy file 28 KB trên Windows, Linux & macOS | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email/AirDrop tức thì |
+| **Khả năng đóng gói & phân phối** | Chạy file ~32 KB trên Windows, Linux & macOS | Phải mang theo file EXE hàng chục MB hoặc cài Python/Pip | Cực kỳ cơ động, gửi qua Zalo/Email/AirDrop tức thì |
 
 > 💡 **Tóm lại:** Nếu `yt-dlp` là một cỗ máy nặng nề đóng gói cả hệ sinh thái Python cồng kềnh phục vụ nghiên cứu phức tạp, thì **TokenVector Media Downloader** là một giải pháp tinh gọn, sắc bén và tối ưu hóa đến từng byte nhị phân: tải nhanh, dung lượng siêu nhẹ, giao diện đẹp và không phụ thuộc bất kỳ runtime nào.
 
@@ -87,10 +87,11 @@ Khác với các ứng dụng tải media truyền thống cồng kềnh (thư�
   - 🔗 Link thiếu cũng chạy: dán `facebook.com/...` hay `fb.watch/...` không có `https://`, ứng dụng tự bổ sung đầy đủ.
   - 🛡️ Nếu link trả về hết hạn và chỉ còn là trang giữ chỗ (không phải video), file lỗi sẽ tự động bị xóa và báo rõ ràng, không để lại file `.mp4` giả.
 - [x] **Tải Video TikTok:**
-  - 🎵 Dán link video TikTok (`tiktok.com/@user/video/...`) và bấm **`[ DOWNLOAD ]`** — ứng dụng tự phân giải link MP4 trực tiếp và lưu theo đúng tên video.
+  - 🎵 Dán link video TikTok (`tiktok.com/@user/video/...`) và bấm **`[ DOWNLOAD ]`** — ứng dụng tự phân giải link MP4 trực tiếp, GUI lưu theo đúng tên video, CLI lưu thành `tiktok_video.mp4`.
+- [x] **Ghi chú CLI Facebook:** CLI lưu video Facebook thành `facebook_video.mp4` và báo mã lỗi riêng từng trường hợp (`0` xong, `2` không tải được trang/API, `3` không thấy link video, `4` tải file thất bại, `5` toàn gặp trang đệm).
 - [x] **Tích hợp cả phiên bản CLI và GUI:**
-  - `tv-downloader-gui.exe`: Ứng dụng đồ họa người dùng (~28 KB).
-  - `tv-downloader-cli.exe`: Dành cho lập trình viên chạy lệnh terminal hoặc tích hợp kịch bản tự động (~16 KB).
+  - `tv-downloader-gui.exe`: Ứng dụng đồ họa người dùng (~32 KB).
+  - `tv-downloader-cli.exe`: Dành cho lập trình viên chạy lệnh terminal hoặc tích hợp kịch bản tự động (~25 KB). Cách dùng: `tv-downloader-cli.exe <media_url> [c_user] [xs]`.
 
 ---
 
@@ -108,8 +109,8 @@ TokenVector-Media-Downloader/
 ├── il_features/              # Các module tính năng IL Compiler & GUI WinForms
 │   ├── win32_gui_window.tkv  # Giao diện WinForms Native & bộ giải mã luồng
 │   └── ...                   # Toàn bộ module thư viện TokenVector IL
-├── tv-downloader-gui.exe     # Bản thực thi đồ họa GUI (~28 KB, chạy trên Win/Linux/macOS)
-├── tv-downloader-cli.exe     # Bản thực thi dòng lệnh CLI (~16 KB, chạy trên Win/Linux/macOS)
+├── tv-downloader-gui.exe     # Bản thực thi đồ họa GUI (~32 KB, chạy trên Win/Linux/macOS)
+├── tv-downloader-cli.exe     # Bản thực thi dòng lệnh CLI (~25 KB, chạy trên Win/Linux/macOS)
 ├── build.bat                 # Script tự động build trên Windows
 ├── build.sh                  # Script tự động build trên Linux & macOS
 ├── HUONG_DAN.txt             # Tài liệu hướng dẫn sử dụng nhanh
@@ -122,13 +123,24 @@ TokenVector-Media-Downloader/
 
 - **Trên Windows:**
   - **Khởi chạy GUI:** Click đúp chuột trực tiếp vào file `tv-downloader-gui.exe`.
-  - **Khởi chạy CLI:** Mở Command Prompt / PowerShell: `.\tv-downloader-cli.exe <link_youtube>`.
-- **Trên Linux:**
-  - **GUI:** `mono tv-downloader-gui.exe`
-  - **CLI:** `mono tv-downloader-cli.exe <link_youtube>`
+  - **Khởi chạy CLI:** Mở Command Prompt / PowerShell: `.\tv-downloader-cli.exe <link_video>`.
+- **Trên Linux (Ubuntu/Debian):**
+  - Cài đặt trước: `sudo apt-get install -y mono-runtime libmono-system-windows-forms4.0-cil libgdiplus xvfb`
+  - **GUI:** `xvfb-run mono tv-downloader-gui.exe` (máy desktop có màn hình thì bỏ `xvfb-run`).
+  - **CLI:** `mono tv-downloader-cli.exe <link_video>`
 - **Trên macOS:**
+  - Cài đặt trước: Mono MDK + XQuartz.
   - **GUI:** `mono tv-downloader-gui.exe`
-  - **CLI:** `mono tv-downloader-cli.exe <link_youtube>`
+  - **CLI:** `mono tv-downloader-cli.exe <link_video>`
+
+### ✅ Trạng thái đa nền tảng đã kiểm chứng (cả 2 file, không dùng P/Invoke Win32):
+
+| File | Windows | Linux | macOS |
+| :--- | :--- | :--- | :--- |
+| `tv-downloader-cli.exe` (~25 KB) | Native ✅ | Đã test thật trên Ubuntu + Mono 6.8 ✅ (banner, luồng demo, tải live TikTok khớp từng byte với Windows) | Chạy qua Mono theo lý thuyết (CI có matrix, chưa chạy máy thật) |
+| `tv-downloader-gui.exe` (~32 KB) | Native ✅ | Đã test render + chạy (chụp màn hình Xvfb + openbox: đủ form, ô nhập, nút, tiến trình) ✅ | Chạy qua Mono + XQuartz theo lý thuyết (chưa chạy máy thật) |
+
+Ghi chú: GUI cần X server (máy chủ không màn hình dùng `xvfb-run`) và `libgdiplus` để vẽ chữ; cầu nối `os_system` tự chọn `/bin/sh` trên POSIX thay vì `cmd.exe`.
 
 ---
 

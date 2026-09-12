@@ -15,7 +15,7 @@ def format_transfer_rate(rate_bytes: "f64") -> "str":
         return str(round(kb_rate, 2)) + "KiB/s"
     return str(round(rate_bytes, 2)) + "B/s"
 
-def format_eta_string(seconds: "i64") -> "str":
+def format_eta_string(seconds: "i32") -> "str":
     if seconds < 0:
         return "--:--"
     m = seconds // 60
@@ -39,7 +39,49 @@ def main() -> "i32":
         target_media_url = args[1]
 
     video_title = "NOAH NINE ALBUM"
+    target_media_url = fb_normalize_url(target_media_url)
     print("[INFO] Dang xu ly URL: " + target_media_url)
+
+    if tt_is_tiktok_url(target_media_url) == 1:
+        print("[INFO] Phat hien TikTok - dung API resolve (khong can yt-dlp/ffmpeg)")
+        tt_out = "tiktok_video.mp4"
+        print("[download] Dang phan giai link video truc tiep...")
+        tt_status = tt_download(target_media_url, tt_out)
+        if tt_status == 0:
+            print("[SUCCESS] Da tai xong: " + tt_out)
+        elif tt_status == 2:
+            print("[ERROR] Khong tai duoc API TikTok (mang hoac bi chan truy cap)")
+        else:
+            print("[ERROR] Khong tim thay link video TikTok")
+        return tt_status
+
+    if fb_is_facebook_url(target_media_url) == 1:
+        print("[INFO] Phat hien Facebook - dung engine native (khong can yt-dlp/ffmpeg)")
+        fb_out = "facebook_video.mp4"
+        fb_cookie = ""
+        if len(args) > 3:
+            fb_user = args[2]
+            fb_xs = args[3]
+            fb_tmp = "c_user=" + fb_user
+            fb_tmp2 = fb_tmp + "; xs="
+            fb_cookie = fb_tmp2 + fb_xs
+            print("[INFO] Da nhan session cookie (tai noi dung ban duoc phep xem)")
+        elif len(args) > 2:
+            fb_cookie = args[2]
+            print("[INFO] Da nhan session cookie (tai noi dung ban duoc phep xem)")
+        print("[download] Dang phan giai link video truc tiep (toi da 10 luot thu)...")
+        fb_status = fb_download_retry(target_media_url, fb_out, fb_cookie)
+        if fb_status == 0:
+            print("[SUCCESS] Da tai xong: " + fb_out)
+        elif fb_status == 2:
+            print("[ERROR] Khong tai duoc trang Facebook (mang hoac bi chan truy cap)")
+        elif fb_status == 3:
+            print("[ERROR] Khong tim thay link video (chi ho tro video cong khai)")
+        elif fb_status == 5:
+            print("[ERROR] Link luon tra ve trang dem quang cao, hay thu lai sau")
+        else:
+            print("[ERROR] Tai file that bai, ma loi: " + str(fb_status))
+        return fb_status
 
     audio_file = "NOAH NINE ALBUM [bZ0aLE4L9Go].m4a"
     video_file = "NOAH NINE ALBUM [bZ0aLE4L9Go].mp4"

@@ -7,7 +7,7 @@ Email: nguyen.hung.tran.18@gmail.com
 
 Thu muc nay chua cac file thuc thi can thiet:
 
-1. tv-downloader-gui.exe (Dung luong sieu nhe ~16 KB)
+1. tv-downloader-gui.exe (Dung luong sieu nhe ~32 KB)
    - Windows: Click dup chuot truc tiep de mo giao dien do hoa Windows Forms.
    - Linux: mono tv-downloader-gui.exe (yeu cau: mono-runtime, libgdiplus, mono-winforms)
    - macOS: mono tv-downloader-gui.exe (yeu cau: mono-mdk, xquartz)
@@ -17,8 +17,22 @@ Thu muc nay chua cac file thuc thi can thiet:
    - Ho tro chon thu muc luu, chon 7 dinh dang (MP4, MKV, WebM, MP3, M4A, WAV, FLAC).
    - Co nut STOP huy tai tuc thi va tu dong don dep sach file do dang.
 
-2. tv-downloader-cli.exe (~16 KB)
+2. tv-downloader-cli.exe (~25 KB)
    - Windows (CMD/PowerShell):
-     tv-downloader-cli.exe <link_youtube>
+     tv-downloader-cli.exe <link_video> [c_user] [xs]
    - Linux / macOS:
-     mono tv-downloader-cli.exe <link_youtube>
+     mono tv-downloader-cli.exe <link_video> [c_user] [xs]
+   - Ho tro link YouTube, Facebook (video/Reels/fb.watch) va TikTok.
+   - Link thieu https:// se tu dong bo sung day du.
+   - File tai ve: facebook_video.mp4 (Facebook), tiktok_video.mp4 (TikTok).
+   - [c_user] [xs] la cookie tuy chon cho video Facebook can dang nhap.
+
+3. Tai video Facebook/Reels (chi video cong khai):
+   - Dan link video, Reels hoac fb.watch vao o URL roi bam [ DOWNLOAD ].
+   - Khong can dang nhap, khong can cookie, khong can yt-dlp/ffmpeg.
+   - Neu link het han tra ve trang dem, ung dung tu dong lay link
+     moi va tai lai; file loi tu dong bi xoa.
+
+4. Tai video TikTok:
+   - Dan link video cu the (dang .../video/ID, khong tai duoc
+     link /foryou vi do la trang feed chung) roi bam [ DOWNLOAD ].

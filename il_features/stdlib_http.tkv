@@ -45,9 +45,19 @@ dau ',' trong chuoi "..." khong con lam tach nham."""
 from il_dispatch import register_expr_builtin
 
 
+def _push_tls12(out):
+    """Ep TLS hien dai (Tls12|Tls11|Tls = 4032) truoc moi call HTTP.
+    Facebook (va nhieu CDN) tra 403 voi TLS cu mac dinh cua .NET Framework
+    (xac minh THAT: TLS11 -> 403, TLS12 -> 200). Giong GUI downloader
+    (win32_gui_window.tkv)."""
+    out.append('    ldc.i4 4032')
+    out.append('    call void [System]System.Net.ServicePointManager::set_SecurityProtocol(valuetype [System]System.Net.SecurityProtocolType)')
+
+
 def compile_http_get(args, scope, out, dtype, ctx):
     if len(args) != 1:
         raise SyntaxError("il_codegen: http_get(url) chi nhan dung 1 tham so")
+    _push_tls12(out)
     out.append('    newobj instance void [System]System.Net.WebClient::.ctor()')
     ctx['compile_expr'](args[0], scope, out, 'str', ctx)
     out.append('    callvirt instance string [System]System.Net.WebClient::DownloadString(string)')
@@ -56,6 +66,7 @@ def compile_http_get(args, scope, out, dtype, ctx):
 def _push_upload(args, scope, out, ctx, method, ctype_node):
     """WebClient + Content-Type + UploadString(url, method, data). ctype_node
     = None nghia la dung 'application/json'."""
+    _push_tls12(out)
     out.append('    newobj instance void [System]System.Net.WebClient::.ctor()')
     out.append('    dup')
     out.append('    callvirt instance class [System]System.Net.WebHeaderCollection '
@@ -97,6 +108,7 @@ def push_http_delete(args, scope, out, dtype, ctx):
     CHUNG duong UploadString thay vi them 1 co che rieng)."""
     if len(args) != 1:
         raise SyntaxError("il_codegen: http_delete(url) chi nhan dung 1 tham so")
+    _push_tls12(out)
     out.append('    newobj instance void [System]System.Net.WebClient::.ctor()')
     ctx['compile_expr'](args[0], scope, out, 'str', ctx)
     out.append('    ldstr "DELETE"')
@@ -180,6 +192,7 @@ def _make_h_builtin(method, has_body, prefix):
     def codegen_fn(args, scope, out, dtype, ctx):
         if len(args) != argc:
             raise SyntaxError(f'il_codegen: {prefix}{sig_txt} can dung {argc} tham so')
+        _push_tls12(out)
         out.append('    newobj instance void [System]System.Net.WebClient::.ctor()')
         if has_body:
             out.append('    dup')
@@ -223,6 +236,7 @@ register_expr_builtin('http_delete', push_http_delete, 'str')
 def compile_http_download_file(args, scope, out, dtype, ctx):
     if len(args) != 2:
         raise SyntaxError("il_codegen: http_download_file(url, out_path) can dung 2 tham so")
+    _push_tls12(out)
     out.append('    newobj instance void [System]System.Net.WebClient::.ctor()')
     ctx['compile_expr'](args[0], scope, out, 'str', ctx)
     ctx['compile_expr'](args[1], scope, out, 'str', ctx)
