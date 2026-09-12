@@ -200,6 +200,8 @@ Nếu công cụ này giúp ích cho bạn, hãy mời tác giả một ly cà p
   TRAN NGUYEN HUNG.
 - **MoMo:** quét mã QR bên dưới.
 
+  <img src="assets/momo-qr.jpg" alt="QR MoMo ủng hộ" width="300" />
+
 ## 📄 Bản quyền & Giấy phép (License)
 
 Dự án được phân phối dưới giấy phép **[MIT License](LICENSE)**. Bạn hoàn toàn tự do sử dụng, sửa đổi và đóng góp phát triển.

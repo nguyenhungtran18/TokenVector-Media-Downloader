@@ -208,7 +208,9 @@ binaries tiny and the updates coming:
   (one-time or monthly, 5% platform fee)
 - **Bank transfer (Vietnam):** MB Bank — Account: `0989503018` —
   TRAN NGUYEN HUNG.
-- **MoMo:** QR code below.
+- **MoMo:** scan the QR code below.
+
+  <img src="assets/momo-qr.jpg" alt="MoMo donate QR" width="300" />
 
 ## 👨‍💻 Author & Contact
 
