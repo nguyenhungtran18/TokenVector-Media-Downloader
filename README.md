@@ -111,7 +111,7 @@ TokenVector-Media-Downloader/
 ├── tv-downloader-cli.exe     # Compiled CLI executable (~25 KB, runs on Win/Linux/macOS)
 ├── build.bat                 # Windows automated build script
 ├── build.sh                  # Linux & macOS automated build script
-├── HUONG_DAN.txt             # Quick user manual
+├── USER_GUIDE.txt            # Quick user manual
 ├── LICENSE                   # MIT License
 ├── README.md                 # English documentation (this file)
 └── README.vi.md              # Vietnamese documentation (Tài liệu tiếng Việt)
