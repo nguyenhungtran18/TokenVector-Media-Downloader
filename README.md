@@ -9,6 +9,7 @@
   <img src="https://img.shields.io/badge/CI%20Matrix-Ubuntu%20%7C%20macOS%20%7C%20Windows%20Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI Passing" />
   <img src="https://img.shields.io/badge/Binary%20Size-%3C35%20KB-blue?style=for-the-badge" alt="Binary Size" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
+  <a href="https://github.com/sponsors/nguyenhungtran18"><img src="https://img.shields.io/badge/Sponsor-❤-red?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Sponsor" /></a>
 </p>
 
 ---
@@ -195,6 +196,16 @@ mono tv-downloader-cli.exe <media_url>
 This project is licensed under the **[MIT License](LICENSE)**. Feel free to use, modify, and distribute.
 
 ---
+
+## 💖 Support This Project
+
+If this tool saves you time, consider sponsoring — every coffee keeps the
+binaries tiny and the updates coming:
+
+- **GitHub Sponsors:** https://github.com/sponsors/nguyenhungtran18
+  (Vietnam-supported 🇻🇳, cards welcome from anywhere)
+- **Buy Me a Coffee / MoMo / Bank transfer:** coming soon — links will be
+  added here.
 
 ## 👨‍💻 Author & Contact
 
