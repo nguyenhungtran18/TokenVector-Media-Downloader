@@ -28,25 +28,64 @@ def format_eta_string(seconds: "i32") -> "str":
         s_str = "0" + str(s)
     return m_str + ":" + s_str
 
-def main() -> "i32":
-    print("=== TokenVector Media Downloader Engine (Native .tkv) ===")
-    print("[INFO] Che do: Dong lenh (CLI) | Kien truc: Phuong an 2 (2-Tier Decoupled Bridge)")
-    print("[INFO] Subsystem: 3 (Console CUI) | Engine: AOT CIL Unboxed Native")
+def json_result(platform: "str", ok: "i32", code: "i32", file: "str", message: "str") -> "str":
+    if ok == 1:
+        j1 = "{\"status\":\"ok\",\"platform\":\""
+        j2 = j1 + platform
+        j3 = j2 + "\",\"file\":\""
+        j4 = j3 + file
+        return j4 + "\"}"
+    e1 = "{\"status\":\"error\",\"platform\":\""
+    e2 = e1 + platform
+    e3 = e2 + "\",\"code\":"
+    e4 = e3 + str(code)
+    e5 = e4 + ",\"message\":\""
+    e6 = e5 + message
+    return e6 + "\"}"
 
+def main() -> "i32":
     args = sys_argv()
     target_media_url = ""
-    if len(args) > 1:
-        target_media_url = args[1]
+    cookie1 = ""
+    cookie2 = ""
+    json_mode = 0
+    k = 1
+    while k < len(args):
+        a = args[k]
+        if a == "--json":
+            json_mode = 1
+        elif len(target_media_url) == 0:
+            target_media_url = a
+        elif len(cookie1) == 0:
+            cookie1 = a
+        else:
+            cookie2 = a
+        k = k + 1
+
+    if json_mode == 0:
+        print("=== TokenVector Media Downloader Engine (Native .tkv) ===")
+        print("[INFO] Che do: Dong lenh (CLI) | Kien truc: Phuong an 2 (2-Tier Decoupled Bridge)")
+        print("[INFO] Subsystem: 3 (Console CUI) | Engine: AOT CIL Unboxed Native")
 
     video_title = "NOAH NINE ALBUM"
     target_media_url = fb_normalize_url(target_media_url)
-    print("[INFO] Dang xu ly URL: " + target_media_url)
+    if json_mode == 0:
+        print("[INFO] Dang xu ly URL: " + target_media_url)
 
     if tt_is_tiktok_url(target_media_url) == 1:
-        print("[INFO] Phat hien TikTok - dung API resolve (khong can yt-dlp/ffmpeg)")
         tt_out = "tiktok_video.mp4"
-        print("[download] Dang phan giai link video truc tiep...")
+        if json_mode == 0:
+            print("[INFO] Phat hien TikTok - dung API resolve (khong can yt-dlp/ffmpeg)")
+            print("[download] Dang phan giai link video truc tiep...")
         tt_status = tt_download(target_media_url, tt_out)
+        if json_mode == 1:
+            if tt_status == 0:
+                print(json_result("tiktok", 1, 0, tt_out, ""))
+            elif tt_status == 2:
+                print(json_result("tiktok", 0, 2, "", "TikTok API unreachable"))
+            else:
+                print(json_result("tiktok", 0, 3, "", "No TikTok video link found"))
+            return tt_status
         if tt_status == 0:
             print("[SUCCESS] Da tai xong: " + tt_out)
         elif tt_status == 2:
@@ -56,21 +95,36 @@ def main() -> "i32":
         return tt_status
 
     if fb_is_facebook_url(target_media_url) == 1:
-        print("[INFO] Phat hien Facebook - dung engine native (khong can yt-dlp/ffmpeg)")
         fb_out = "facebook_video.mp4"
         fb_cookie = ""
-        if len(args) > 3:
-            fb_user = args[2]
-            fb_xs = args[3]
+        if len(cookie2) > 0:
+            fb_user = cookie1
+            fb_xs = cookie2
             fb_tmp = "c_user=" + fb_user
             fb_tmp2 = fb_tmp + "; xs="
             fb_cookie = fb_tmp2 + fb_xs
-            print("[INFO] Da nhan session cookie (tai noi dung ban duoc phep xem)")
-        elif len(args) > 2:
-            fb_cookie = args[2]
-            print("[INFO] Da nhan session cookie (tai noi dung ban duoc phep xem)")
-        print("[download] Dang phan giai link video truc tiep (toi da 10 luot thu)...")
+            if json_mode == 0:
+                print("[INFO] Da nhan session cookie (tai noi dung ban duoc phep xem)")
+        elif len(cookie1) > 0:
+            fb_cookie = cookie1
+            if json_mode == 0:
+                print("[INFO] Da nhan session cookie (tai noi dung ban duoc phep xem)")
+        if json_mode == 0:
+            print("[INFO] Phat hien Facebook - dung engine native (khong can yt-dlp/ffmpeg)")
+            print("[download] Dang phan giai link video truc tiep (toi da 10 luot thu)...")
         fb_status = fb_download_retry(target_media_url, fb_out, fb_cookie)
+        if json_mode == 1:
+            if fb_status == 0:
+                print(json_result("facebook", 1, 0, fb_out, ""))
+            elif fb_status == 2:
+                print(json_result("facebook", 0, 2, "", "Facebook page or API unreachable"))
+            elif fb_status == 3:
+                print(json_result("facebook", 0, 3, "", "No video link found"))
+            elif fb_status == 5:
+                print(json_result("facebook", 0, 5, "", "Placeholder pages on every attempt"))
+            else:
+                print(json_result("facebook", 0, fb_status, "", "Download failed"))
+            return fb_status
         if fb_status == 0:
             print("[SUCCESS] Da tai xong: " + fb_out)
         elif fb_status == 2:
@@ -82,6 +136,10 @@ def main() -> "i32":
         else:
             print("[ERROR] Tai file that bai, ma loi: " + str(fb_status))
         return fb_status
+
+    if json_mode == 1:
+        print(json_result("unknown", 0, 6, "", "JSON mode supports facebook and tiktok links only"))
+        return 6
 
     audio_file = "NOAH NINE ALBUM [bZ0aLE4L9Go].m4a"
     video_file = "NOAH NINE ALBUM [bZ0aLE4L9Go].mp4"
